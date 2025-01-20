@@ -1,0 +1,59 @@
+/* Basic Layout */
+body {
+    font-family: sans-serif;
+}
+
+header {
+    display: flex; 
+    justify-content: space-between;
+    align-items: center; 
+    padding: 20px;
+    background-color: #f0f0f0; 
+}
+
+.logo {
+    font-weight: bold;
+}
+
+main {
+    display: flex;
+}
+
+.left-side {
+    width: 40%;
+    padding: 20px;
+}
+
+.right-side {
+    width: 60%; 
+    padding: 20px;
+}
+
+/* User Info */
+.user-info ul {
+    list-style: none; 
+    padding: 0;
+}
+
+/* Calendar (Basic) */
+.calendar {
+    /* Add calendar styles later */
+}
+
+/* Rewards */
+.rewards {
+    /* Style the rewards box */
+}
+
+.badge-container {
+    display: flex;
+    justify-content: space-around; 
+}
+
+.badge-container div {
+    width: 40px; 
+    height: 40px;
+    border-radius: 50%; 
+    background-color: lightgray; 
+    margin: 10px;
+}
