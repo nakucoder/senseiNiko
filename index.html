@@ -6,8 +6,9 @@
 </head>
 <body>
     <header>
-        <div class="logo">iPal ROBOT TRAINER</div>
-        <img src="iPalRobot_image.JPG" alt="iPal Robot Trainer Logo"> 
+        <div class="logo"> 
+            iPal ROBOT TRAINER 
+            <img src="iPalRobot_image.JPG" alt="iPal Robot Trainer Logo">
         </div>
         <div class="title">iPal GYM TRAINER!</div>
     </header>
@@ -16,21 +17,46 @@
         <div class="left-side">
             <div class="user-info">
                 <h3>Goals Listed</h3>
-                <ul> 
-                    </ul>
+                <ul></ul>
                 <p>Member Since: <span id="member-since"></span></p> 
                 <p id="motivational-quote"></p> 
             </div>
 
             <div class="calendar">
-                </div>
+                <table> 
+                    <thead>
+                        <tr>
+                            <th>Sun</th>
+                            <th>Mon</th>
+                            <th>Tue</th>
+                            <th>Wed</th>
+                            <th>Thu</th>
+                            <th>Fri</th>
+                            <th>Sat</th>
+                        </tr>
+                    </thead>
+                    <tbody> 
+                    </tbody>
+                </table>
+            </div> 
         </div>
 
         <div class="right-side">
             <div class="rewards">
                 <h3>Rewards Collected Recently</h3>
-                <div class="badge-container">
-                    </div>
+                <div class="badge-container"></div>
+
+                <div class="sign-in"> 
+                    <h4>Sign In</h4>
+                    <form> 
+                        <label for="username">Username:</label><br>
+                        <input type="text" id="username" name="username"><br><br>
+                        <label for="password">Password:</label><br>
+                        <input type="password" id="password" name="password"><br><br>
+                        <input type="submit" value="Sign In">
+                    </form>
+                    <p>Not registered? <a href="#">Click here to register</a></p> 
+                </div> 
             </div>
         </div>
     </main>

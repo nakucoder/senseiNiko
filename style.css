@@ -13,6 +13,9 @@ header {
 
 .logo {
     font-weight: bold;
+    display: flex; /* Make .logo a flex container */
+    align-items: center; /* Vertically align items */
+    gap: 400px; /* Add space between text and image */
 }
 
 main {
@@ -43,6 +46,7 @@ main {
 /* Rewards */
 .rewards {
     /* Style the rewards box */
+    text-align: right; 
 }
 
 .badge-container {
@@ -62,6 +66,41 @@ body {
     background-color: lightblue; /* Light blue background */
 }
 .logo img {
-    max-width: 100px; /* Adjust the value as needed */
+    max-width: 150px; /* Adjust the value as needed */
     height: auto;     /* Maintain aspect ratio */
+}
+.title {
+    color: red; 
+}
+
+.calendar table {
+    border-collapse: collapse; 
+    width: 100%;
+}
+
+.calendar th, .calendar td {
+    border: 1px solid #ddd; 
+    text-align: center;
+    padding: 8px;
+}
+
+.calendar th {
+    background-color: #f0f0f0;
+}
+
+.sign-in {
+    /* Add styles for the container, e.g., border, padding, margin */
+}
+
+.sign-in label {
+    /* Add styles for the labels */
+}
+
+.sign-in input[type="text"], 
+.sign-in input[type="password"] {
+    /* Add styles for the input fields */
+}
+
+.sign-in input[type="submit"] {
+    /* Add styles for the submit button */
 }
