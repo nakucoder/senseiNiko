@@ -57,3 +57,11 @@ main {
     background-color: lightgray; 
     margin: 10px;
 }
+body {
+    font-family: sans-serif;
+    background-color: lightblue; /* Light blue background */
+}
+.logo img {
+    max-width: 100px; /* Adjust the value as needed */
+    height: auto;     /* Maintain aspect ratio */
+}
