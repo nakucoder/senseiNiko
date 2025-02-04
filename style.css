@@ -1,329 +1,285 @@
 /* Light Mode Color Scheme */
 :root {
-    --color-bg: #fff;
-    --color-bg2: #f4f4f4;
-    --color-toggle-accent: #ff7900;
-    --color-text: #333333;
+  --color-bg: #fff;
+  --color-bg2: #f4f4f4;
+  --color-toggle-accent: #ff7900;
+  --color-text: #333333;
+  --color-border: #ddd; /* Added border color */
+}
+
+/* Dark Mode Color Scheme */
+html.dark {
+  --color-bg: #000;
+  --color-bg2: #0b0b0b;
+  --color-text: #fafafa;
+  --color-toggle-accent: #a076ce;
+  --color-border: #333; /* Darker border color */
+}
+
+/* Apply colors */
+html {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transitions */
+}
+
+body {
+  margin: 0;
+  font-family: Helvetica, sans-serif;
+  display: flex; /* Use flexbox for overall layout */
+  flex-direction: column; /* Stack header on top of main content */
+  min-height: 100vh; /* Ensure body takes full viewport height */
+}
+
+/* Color Toggle Switch with animation */
+#color-mode-switch {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 10px 20px; /* Added padding */
+  position: absolute; /* Position the switch */
+  top: 10px;
+  right: 20px;
+  z-index: 4; /* Ensure it's above other elements */
+}
+
+/* Header */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px; /* Reduced padding */
+  background-color: var(--color-bg);
+  border-bottom: 1px solid var(--color-border); /* Use variable border color */
+  position: sticky; /* Sticky header */
+  top: 0;
+  z-index: 3;
+  transition: background-color 0.3s ease, border-color 0.3s ease; /* Smooth transitions */
+  width: 100%; /* Ensure full width */
+}
+
+.logo {
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo img {
+  max-width: 45px;
+  height: auto;
+}
+/* Navigation */
+nav {
+  display: flex;
+  justify-content: center; /* Center the menu items */
+  flex-grow: 1; /* Allow the nav to expand and center in the available space */
+}
+
+/* Navigation */
+nav ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex; /* Use flexbox for horizontal menu */
+}
+
+nav li {
+  display: flex;
+  justify-content: center; /* Center the links */
+}
+
+nav li a {
+  display: block;
+  padding: 10px 15px; /* Adjusted padding */
+  text-decoration: none;
+  color: var(--color-text);
+  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transitions */
+}
+
+nav li a:hover {
+  background-color: var(--color-bg2);
+}
+/* Color Toggle Switch with animation */
+#color-mode-switch {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center the toggle vertically */
+  padding: 10px 20px; /* Added padding */
+  position: absolute; /* Position the switch */
+  top: 10px;
+  right: 20px;
+  z-index: 4; /* Ensure it's above other elements */
+}
+
+
+/* Mobile Menu (Improved) */
+.menu-icon {
+  display: none; /* Hidden by default on larger screens */
+  cursor: pointer;
+  padding: 10px 20px;
+}
+
+.navicon {
+  background-color: var(--color-text);
+  width: 25px;
+  height: 3px;
+  margin: 5px 0;
+  transition: background-color 0.3s ease; /* Smooth transitions */
+}
+
+@media (max-width: 768px) { /* Adjust breakpoint as needed */
+  nav ul {
+      flex-direction: column; /* Stack menu items vertically */
+      display: none; /* Hide menu on smaller screens */
+      position: absolute;
+      top: 60px; /* Adjust based on header height */
+      left: 0;
+      width: 100%;
+      background-color: var(--color-bg);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
   }
-  
-  /* Dark Mode Color Scheme */
-  html.dark {
-    --color-bg: #000000;
-    --color-bg2: #0b0b0b;
-    --color-text: #fafafa;
-    --color-toggle-accent: #a076ce;
+
+  nav li {
+      border-bottom: 1px solid var(--color-border); /* Add separators */
   }
-  
-  /* Apply colors */
-  html {
-    background-color: var(--color-bg);
-    color: var(--color-text);
+
+  nav a {
+    padding: 15px 20px;
   }
-  
-  /* Color Toggle Switch with animation */
-  #color-mode-switch {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    padding: 5px 0px;
+
+  .menu-icon {
+      display: block; /* Show menu icon */
   }
-  
-  #color-mode-switch > span {
-    font-size: 30px;
-    display: inline-block;
-    margin-right: 8px;
+
+  .menu-btn:checked ~ nav ul {
+      display: flex; /* Show menu when checked */
   }
-  
-  #color-mode-switch svg {
-    width: 24px;
-    height: 24px;
-    margin: 0 4px;
-  }
-  
-  #color-mode-switch input[type=checkbox] {
-    height: 0;
-    width: 0;
-    margin: 0;
-    visibility: hidden;
-  }
-  
-  #color-mode-switch label {
-    cursor: pointer;
-    text-indent: -9999px;
-    width: 42px;
-    height: 21px;
-    border-radius: 30px;
-    background: var(--color-toggle-accent);
-    display: block;
-    position: relative;
-    margin: 0;
-  }
-  
-  #color-mode-switch label:after {
-    content: '';
-    position: absolute;
-    top: 3px;
-    left: 3px;
-    width: 15px;
-    height: 15px;
-    background: #fff;
-    border-radius: 90px;
-    transition: 0.3s;
-  }
-  
-  #color-mode-switch input:checked + label:after {
-    left: calc(100% - 3px);
-    transform: translateX(-100%);
-  }
-  
-  #color-mode-switch label:active:after {
-    width: 30px;
-  }
-  
-  body {
-    margin: 0;
-    font-family: Helvetica, sans-serif;
-  }
-  
-  /* Basic Layout */
-  body {
-    font-family: sans-serif;
-    background-color: lightblue; /* Light blue background */
-  }
-  
-  header {
-    display: flex; 
-    justify-content: space-between;
-    align-items: center; 
-    padding: 20px;
-    background-color: var(--color-bg); 
-  }
-  
-  .logo {
-    font-weight: bold;
-    display: flex; 
-    align-items: center; 
-    gap: 20px; /* Adjusted space between text and image */
-  }
-  
-  .main {
-    display: flex;
-  }
-  
-  .left-side {
-    width: 40%;
-    padding: 20px;
-  }
-  
-  .right-side {
-    width: 60%; 
-    padding: 20px;
-  }
-  
-  /* User Info */
-  .user-info ul {
-    list-style: none; 
-    padding: 0;
-  }
-  
-  /* Calendar (Basic) */
-  .calendar {
-    /* Add calendar styles later */
-  }
-  
-  /* Rewards */
-  .rewards {
-    /* Style the rewards box */
-    text-align: right; 
-  }
-  
-  .badge-container {
-    display: flex;
-    justify-content: space-around; 
-  }
-  
-  .badge-container div {
-    width: 40px; 
-    height: 40px;
-    border-radius: 50%; 
-    background-color: lightgray; 
-    margin: 10px;
-  }
-  
-  /* Header */
-  .header {
-    background-color: var(--color-bg);
-    border-bottom: 2px solid var(--color-bg2);
-    position: fixed;
-    width: 100%;
-    z-index: 3;
-  }
-  
-  .header a {
-    color: var(--color-text);
-  }
-  
-  .header .logo {
-    display: block;
-    font-size: 2em;
-    padding: 10px 20px;
-    text-decoration: none;
-  }
-  
-  .header ul {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    overflow: hidden;
-    background-color: var(--color-bg);
-  }
-  
-  .header li a {
-    display: block;
-    padding: 20px 20px;
-    border-right: 2px solid var(--color-bg2);
-    text-decoration: none;
-  }
-  
-  .header li:first-child {
-    border-left: 2px solid var(--color-bg2)
-  }
-  
-  .header li a:hover,
-  .header .menu-btn:hover {
-    background-color: var(--color-bg2);
-  }
-  
-  /* Nav Menu */
-  .header .menu {
-    clear: both;
-    max-height: 0;
-    transition: max-height .2s ease-out;
-  }
-  
-  /* Menu Icon */
-  .header .menu-icon {
-    cursor: pointer;
-    display: inline-block;
-    float: right;
-    padding: 28px 20px;
-    position: relative;
-    user-select: none;
-  }
-  
-  .header .menu-icon .navicon {
-    background: var(--color-text);
-    display: block;
-    height: 2px;
-    width: 18px;
-    position: relative;
-    transition: background .2s ease-out;
-  }
-    
-  .header .menu-icon .navicon:before,
-  .header .menu-icon .navicon:after {
-    background: var(--color-text);
-    content: '';
-    display: block;
-    height: 100%;
-    position: absolute;
-    transition: all .2s ease-out;
-    width: 100%;
-  }
-  
-  .header .menu-icon .navicon:before {
-    top: 5px;
-  }
-  
-  .header .menu-icon .navicon:after {
-    top: -5px;
-  }
-  
-  /* Menu Button */
-  .header .menu-btn {
-    display: none;
-  }
-  
-  .header .menu-btn:checked ~ .menu {
-    max-height: 240px;
-  }
-  
-  .header .menu-btn:checked ~ .menu-icon .navicon {
-    background: transparent;
-  }
-  
-  .header .menu-btn:checked ~ .menu-icon .navicon:before {
-    transform: rotate(-45deg);
-  }
-  
-  .header .menu-btn:checked ~ .menu-icon .navicon:after {
-    transform: rotate(45deg);
-  }
-  
-  .header .menu-btn:checked ~ .menu-icon:not(.steps) .navicon:before,
-  .header .menu-btn:checked ~ .menu-icon:not(.steps) .navicon:after {
-    top: 0;
-  }
-  
-  /* 48em = 768px */
-  @media (min-width: 48em) {
-    .header li {
-      float: left;
-    }
-    .header li a {
-      padding: 20px 30px;
-    }
-    .header .menu {
-      clear: none;
-      float: right;
-      max-height: none;
-    }
-    .header .menu-icon {
-      display: none;
-    }
-  }
-  
-  section {
-    padding-top: 60px;
-  }
-  
-  .title {
-    color: red; 
-  }
-  
-  .calendar table {
-    border-collapse: collapse; 
-    width: 100%;
-  }
-  
-  .calendar th, .calendar td {
-    border: 1px solid #ddd; 
-    text-align: center;
-    padding: 8px;
-  }
-  
-  .calendar th {
-    background-color: #f0f0f0;
-  }
-  
-  .sign-in {
-    /* Add styles for the container, e.g., border, padding, margin */
-  }
-  
-  .sign-in label {
-    /* Add styles for the labels */
-  }
-  
-  .sign-in input[type="text"], 
-  .sign-in input[type="password"] {
-    /* Add styles for the input fields */
-  }
-  
-  .sign-in input[type="submit"] {
-    /* Add styles for the submit button */
-  }
-  .header .logo img {
-    max-width: 45px;  /* Adjust size as needed */
-    height: auto;      /* Maintain aspect ratio */
-    margin-right: 15px; /* Add spacing between the logo text and image */
+}
+
+/* Main Content */
+main {
+  display: flex;
+  flex-grow: 1; /* Allow main content to expand */
+  padding: 20px;
+  transition: background-color 0.3s ease; /* Smooth transitions */
+}
+
+.left-side {
+  flex: 0 0 30%; /* Adjusted width using flex properties */
+  padding: 20px;
+  background-color: var(--color-bg2); /* Example background color */
+  border-right: 1px solid var(--color-border); /* Added border */
+  transition: background-color 0.3s ease, border-color 0.3s ease; /* Smooth transitions */
+}
+
+.right-side {
+  flex: 1; /* Adjusts width to fill the remaining space */
+  padding: 20px;
+  transition: background-color 0.3s ease; /* Smooth transitions */
+}
+
+/* Calendar */
+.calendar table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid var(--color-border); /* Added border to the table */
+  transition: border-color 0.3s ease; /* Smooth transitions */
+}
+
+.calendar th, .calendar td {
+  border: 1px solid var(--color-border); /* Use variable border color */
+  text-align: center;
+  padding: 10px; /* Improved padding */
+  transition: border-color 0.3s ease; /* Smooth transitions */
+}
+
+.calendar th {
+  background-color: var(--color-bg2); /* Use secondary background color */
+  font-weight: bold;
+  transition: background-color 0.3s ease; /* Smooth transitions */
+}
+
+/* Rewards */
+.rewards {
+  text-align: right;
+  margin-top: 20px; /* Added margin */
+}
+
+.badge-container {
+  display: flex;
+  justify-content: flex-end; /* Align to the right */
+  gap: 10px;
+}
+
+.badge-container div {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: lightgray;
+  display: flex; /* Center content */
+  align-items: center;
+  justify-content: center;
+}
+
+/* Sign-in Form */
+.sign-in {
+padding: 20px;
+border: 1px solid var(--color-border);
+border-radius: 8px;
+transition: border-color 0.3s ease; /* Smooth transitions */
+}
+
+.sign-in label {
+display: block;
+margin-bottom: 5px;
+color: var(--color-text);
+transition: color 0.3s ease; /* Smooth transitions */
+}
+
+.sign-in input[type="text"],
+.sign-in input[type="password"] {
+width: 100%; /* Full width with padding accounted */
+padding: 8px;
+margin-bottom: 10px;
+border: 1px solid var(--color-border);
+border-radius: 4px;
+box-sizing: border-box; /* Include padding and border in element's total width and height */
+background-color: var(--color-bg2);
+color: var(--color-text);
+transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease; /* Smooth transitions */
+}
+
+.sign-in input[type="submit"] {
+background-color: var(--color-toggle-accent);
+color: white;
+padding: 10px 15px;
+border: none;
+border-radius: 4px;
+cursor: pointer;
+transition: background-color 0.3s ease;
+}
+
+.sign-in input[type="submit"]:hover {
+background-color: darken(var(--color-toggle-accent), 10%);
+}
+
+
+/* about */
+main {
+  display: flex;
+  justify-content: center; /* Center the content horizontally */
+  align-items: center;     /* Center the content vertically */
+  min-height: calc(100vh - /* height of header */ - /* height of footer */); /* Ensure main takes up available space */
+  padding: 20px; /* Add some padding */
+}.about-content {
+  display: flex;
+  flex-direction: column; /* Stack elements vertically */
+  align-items: center;     /* Center items horizontally */
+  text-align: center;      /* Center text within the container */
+  max-width: 800px;       /* Set a maximum width for the content */
+}.about-content img {
+  margin-top: 20px; /* Add space above the image */
+  max-width: 100%;  /* Make sure the image doesn't exceed the container width */
+  height: auto;      /* Maintain aspect ratio */
 }
