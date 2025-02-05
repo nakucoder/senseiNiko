@@ -270,7 +270,7 @@ main {
   display: flex;
   justify-content: center; /* Center the content horizontally */
   align-items: center;     /* Center the content vertically */
-  min-height: calc(100vh - /* height of header */ - /* height of footer */); /* Ensure main takes up available space */
+  min-height: calc(100vh); /* Ensure main takes up available space */ /* height of header */  /* height of footer */
   padding: 20px; /* Add some padding */
 }.about-content {
   display: flex;
