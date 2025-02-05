@@ -382,3 +382,63 @@ header {
   display: block;
   margin: 20px auto 0;
 }
+
+
+
+/* ... calendar? */
+
+.calendar table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.calendar th,
+.calendar td {
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+.calendar th {
+  background-color: #f4f4f4;
+}
+
+.calendar td {
+  cursor: pointer;
+}
+
+.calendar td:hover {
+  background-color: #f0f0f0;
+}
+
+
+
+/* ... dark mode? */
+
+/* Dark Mode Styles */
+body.dark-mode {
+  background-color: #121212;
+  color: white;
+}
+
+body.dark-mode header,
+body.dark-mode .calendar table,
+body.dark-mode .user-info {
+  background-color: #333;
+}
+
+body.dark-mode table, 
+body.dark-mode td {
+  border-color: #444;
+}
+
+body.dark-mode input[type="text"],
+body.dark-mode input[type="password"],
+body.dark-mode input[type="submit"] {
+  background-color: #555;
+  color: white;
+}
+
+body.dark-mode .menu {
+  background-color: #222;
+}

@@ -80,6 +80,73 @@ const toggleDarkMode = () => {
   
 
 
+// Generate the calendar
+
+// Initialize the current date
+const calendarTable = document.querySelector('.calendar table tbody');
+let currentDate = new Date();
+
+// Render the calendar for the current month
+function renderCalendar() {
+    // Get the first day of the month and number of days in the month
+    const firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+    const lastDay = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
+    const daysInMonth = lastDay.getDate();
+    const firstDayOfWeek = firstDay.getDay();
+    
+    // Clear the previous calendar
+    calendarTable.innerHTML = '';
+
+    // Create the table rows for the calendar
+    let row = document.createElement('tr');
+    
+    // Add empty cells for the days before the first day of the month
+    for (let i = 0; i < firstDayOfWeek; i++) {
+        row.appendChild(document.createElement('td'));
+    }
+
+    // Add the days of the current month
+    for (let day = 1; day <= daysInMonth; day++) {
+        if (row.children.length === 7) {
+            calendarTable.appendChild(row);
+            row = document.createElement('tr');
+        }
+
+        const cell = document.createElement('td');
+        cell.textContent = day;
+        cell.addEventListener('click', () => alert(`You selected: ${currentDate.getMonth() + 1}/${day}/${currentDate.getFullYear()}`)); // Simple click event for selecting a date
+        row.appendChild(cell);
+    }
+
+    // Append the last row if it has any remaining cells
+    if (row.children.length > 0) {
+        calendarTable.appendChild(row);
+    }
+
+    // Update the header to reflect the current month
+    const monthYear = document.querySelector('.calendar h2');
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    monthYear.textContent = `${months[currentDate.getMonth()]} ${currentDate.getFullYear()}`;
+}
+
+// Navigate to the previous month
+function prevMonth() {
+    currentDate.setMonth(currentDate.getMonth() - 1);
+    renderCalendar();
+}
+
+// Navigate to the next month
+function nextMonth() {
+    currentDate.setMonth(currentDate.getMonth() + 1);
+    renderCalendar();
+}
+
+// Initial render of the calendar
+renderCalendar();
+
+// Attach event listeners to the navigation buttons
+document.querySelector('#prev-month').addEventListener('click', prevMonth);
+document.querySelector('#next-month').addEventListener('click', nextMonth);
 
 
   
