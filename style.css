@@ -421,6 +421,13 @@ body.dark-mode {
   color: white;
 }
 
+body.dark-mode {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+/* Add any other dark mode styles as needed */
+
 body.dark-mode header,
 body.dark-mode .calendar table,
 body.dark-mode .user-info {

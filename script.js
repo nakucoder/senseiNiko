@@ -148,5 +148,10 @@ renderCalendar();
 document.querySelector('#prev-month').addEventListener('click', prevMonth);
 document.querySelector('#next-month').addEventListener('click', nextMonth);
 
-
-  
+// Dark mode toggle functionality
+const colorModeSwitch = document.getElementById('color-mode-switch');
+if (colorModeSwitch) {
+    colorModeSwitch.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+    });
+}
