@@ -200,9 +200,15 @@ main {
   transition: background-color 0.3s ease; /* Smooth transitions */
 }
 
+#calendar {
+  max-width: calc(900px + 5cm); /* Adjust width */
+  height: calc(100% + 2cm); /* Adjust height */
+  margin: 0 auto;
+}
+
 /* Rewards */
 .rewards {
-  text-align: right;
+  text-align: center; /* Center the text and podium */
   margin-top: 20px; /* Added margin */
 }
 
@@ -479,4 +485,140 @@ body.dark-mode .menu {
 
 .box3 {
   background-color: blue;
+}
+
+/* Podium */
+.podium {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  margin-top: 10px; /* Adjust margin as needed */
+}
+
+.medal {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  border-radius: 50%;
+  margin: 0 10px;
+}
+
+.gold {
+  background-color: gold;
+}
+
+.silver {
+  background-color: silver;
+}
+
+.bronze {
+  background-color: #cd7f32;
+}
+
+/* Rewards Section */
+.rewards {
+  text-align: center; /* Center the text and podium */
+  margin-top: 20px;
+}
+
+.rewards h3 {
+  margin-bottom: 10px;
+}
+
+.rewards .badge-container {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.rewards .podium {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  margin-top: 20px;
+}
+
+.rewards .medal {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  border-radius: 50%;
+  margin: 0 10px;
+}
+
+.rewards .gold {
+  background-color: gold;
+}
+
+.rewards .silver {
+  background-color: silver;
+}
+
+.rewards .bronze {
+  background-color: #cd7f32;
+}
+
+.rewards .sign-in {
+  padding: 20px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  transition: border-color 0.3s ease;
+}
+
+.rewards .sign-in h4 {
+  margin-bottom: 10px;
+}
+
+.rewards .sign-in label {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--color-text);
+  transition: color 0.3s ease;
+}
+
+.rewards .sign-in input[type="text"],
+.rewards .sign-in input[type="password"] {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  box-sizing: border-box;
+  background-color: var(--color-bg2);
+  color: var(--color-text);
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+.rewards .sign-in input[type="submit"] {
+  background-color: var(--color-toggle-accent);
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.rewards .sign-in input[type="submit"]:hover {
+  background-color: darken(var(--color-toggle-accent), 10%);
+}
+
+.rewards .sign-in p {
+  margin-top: 10px;
+}
+
+.rewards .sign-in a {
+  color: var(--color-toggle-accent);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.rewards .sign-in a:hover {
+  color: darken(var(--color-toggle-accent), 10%);
 }

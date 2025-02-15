@@ -155,3 +155,5 @@ if (colorModeSwitch) {
         document.body.classList.toggle('dark-mode');
     });
 }
+
+// CSS code moved to style.css

@@ -55,6 +55,11 @@
           <p>Phone: (123) 456-7890</p>
           <p>Address: 742 Evergreen Terrace, Springfield</p>
         </section>
+        <div class="box-container">
+            <div class="box box1">Box 1</div>
+            <div class="box box2">Box 2</div>
+            <div class="box box3">Box 3</div>
+        </div>
     </main>
 
     <footer>
@@ -62,3 +67,48 @@
 
     <script src="script.js"></script> </body>
 </html>
+
+<style>
+.box-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    height: 300px; /* Adjust height as needed */
+    position: relative;
+}
+
+.box {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 1.2em;
+    font-weight: bold;
+    position: absolute;
+}
+
+.box1 {
+    background-color: red;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.box2 {
+    background-color: green;
+    bottom: 0;
+    left: 25%;
+    transform: translateX(-50%);
+}
+
+.box3 {
+    background-color: blue;
+    bottom: 0;
+    right: 25%;
+    transform: translateX(50%);
+}
+</style>

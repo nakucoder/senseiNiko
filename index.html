@@ -5,6 +5,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>iPal Gym Trainer</title>
     <link rel="stylesheet" href="style.css">
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.css' rel='stylesheet' />
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js'></script>
+    <style>
+        #calendar {
+            max-width: calc(900px + 5cm); /* Adjust width */
+            height: calc(100% + 2cm); /* Adjust height */
+            margin: 0 auto;
+        }
+        .quote {
+            font-style: italic;
+            margin-top: 10px; /* Adjust spacing as needed */
+            margin-left: 20px; /* Indent the quote */
+        }
+        .podium {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            margin-top: 20px;
+        }
+        .medal {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            border-radius: 50%;
+            margin: 0 10px;
+        }
+        .gold {
+            background-color: gold;
+        }
+        .silver {
+            background-color: silver;
+        }
+        .bronze {
+            background-color: #cd7f32;
+        }
+    </style>
 </head>
 <body>
     <!-- Header Section -->
@@ -48,38 +87,24 @@
             <div class="user-info">
                 <h3>Goals Listed</h3>
                 <ul></ul>
+                <p class="quote" id="motivational-quote"></p> <!-- Quote is now inside the user-info div -->
                 <p>Member Since: <span id="member-since"></span></p> 
-                <p id="motivational-quote"></p> 
             </div>
 
-            <div class="calendar">
-                <!-- Calendar Header -->
-                <h2></h2>
-                <button id="prev-month">Prev</button>
-                <button id="next-month">Next</button>
-                <table> 
-                    <thead>
-                        <tr>
-                            <th>Sun</th>
-                            <th>Mon</th>
-                            <th>Tue</th>
-                            <th>Wed</th>
-                            <th>Thu</th>
-                            <th>Fri</th>
-                            <th>Sat</th>
-                        </tr>
-                    </thead>
-                    <tbody> 
-                        <!-- Calendar days will be dynamically generated here -->
-                    </tbody>
-                </table>
-            </div> 
+            <!-- New FullCalendar Container -->
+            <div id="calendar"></div>
         </div>
 
         <div class="right-side">
             <div class="rewards">
                 <h3>Rewards Collected Recently</h3>
                 <div class="badge-container"></div>
+
+                <div class="podium">
+                    <div class="medal gold">🥇</div>
+                    <div class="medal silver">🥈</div>
+                    <div class="medal bronze">🥉</div>
+                </div>
 
                 <div class="sign-in"> 
                     <h4>Sign In</h4>
@@ -97,81 +122,56 @@
     </main>
 
     <script>
-        // Initialize the current date
-        const calendarTable = document.querySelector('.calendar table tbody');
-        const motivationalQuote = document.getElementById("motivational-quote");
-        let currentDate = new Date();
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
 
-        // Set a motivational quote
-        const quotes = [
-            "Success is the sum of small efforts, repeated day in and day out.",
-            "The only bad workout is the one that didn’t happen.",
-            "Push yourself, because no one else is going to do it for you.",
-            "Don’t stop when you’re tired, stop when you’re done."
-        ];
-        motivationalQuote.textContent = quotes[Math.floor(Math.random() * quotes.length)];
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                },
+                events: [
+                    {
+                        title: 'Event 1',
+                        start: '2025-02-01'
+                    },
+                    {
+                        title: 'Event 2',
+                        start: '2025-02-05',
+                        end: '2025-02-07'
+                    },
+                    {
+                        title: 'Event 3',
+                        start: '2025-02-09T12:30:00',
+                        allDay: false // will make the time show
+                    }
+                ]
+            });
 
-        // Render the calendar for the current month
-        function renderCalendar() {
-            // Get the first day of the month and number of days in the month
-            const firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
-            const lastDay = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
-            const daysInMonth = lastDay.getDate();
-            const firstDayOfWeek = firstDay.getDay();
-            
-            // Clear the previous calendar
-            calendarTable.innerHTML = '';
+            calendar.render();
 
-            // Create the table rows for the calendar
-            let row = document.createElement('tr');
-            
-            // Add empty cells for the days before the first day of the month
-            for (let i = 0; i < firstDayOfWeek; i++) {
-                row.appendChild(document.createElement('td'));
-            }
+            const quotes = [
+                "You miss 100% of the shots you don’t take.",
+                "The journey of a thousand miles begins with one step.",
+                "Believe you can and you're halfway there.",
+                "Success is not final, failure is not fatal: It is the courage to continue that counts.",
+                "You miss 100% of the shots you don’t take.",
+                "It’s not whether you get knocked down, it’s whether you get up.",
+                "Winners never quit and quitters never win.",
+                "Persistence can change failure into extraordinary achievement.",
+                "Nobody who ever gave his best regretted it.",
+                "The harder the battle, the sweeter the victory.",
+                "If you can believe it, the mind can achieve it.",
+                "There may be people that have more talent than you, but there’s no excuse for anyone to work harder than you do.",
+                "Ever tried. Ever failed. No matter. Try Again. Fail again. Fail better."
+            ];
 
-            // Add the days of the current month
-            for (let day = 1; day <= daysInMonth; day++) {
-                if (row.children.length === 7) {
-                    calendarTable.appendChild(row);
-                    row = document.createElement('tr');
-                }
-
-                const cell = document.createElement('td');
-                cell.textContent = day;
-                cell.addEventListener('click', () => alert(`You selected: ${currentDate.getMonth() + 1}/${day}/${currentDate.getFullYear()}`)); // Simple click event for selecting a date
-                row.appendChild(cell);
-            }
-
-            // Append the last row if it has any remaining cells
-            if (row.children.length > 0) {
-                calendarTable.appendChild(row);
-            }
-
-            // Update the header to reflect the current month
-            const monthYear = document.querySelector('.calendar h2');
-            const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-            monthYear.textContent = `${months[currentDate.getMonth()]} ${currentDate.getFullYear()}`;
-        }
-
-        // Navigate to the previous month
-        function prevMonth() {
-            currentDate.setMonth(currentDate.getMonth() - 1);
-            renderCalendar();
-        }
-
-        // Navigate to the next month
-        function nextMonth() {
-            currentDate.setMonth(currentDate.getMonth() + 1);
-            renderCalendar();
-        }
-
-        // Initial render of the calendar
-        renderCalendar();
-
-        // Attach event listeners to the navigation buttons
-        document.querySelector('#prev-month').addEventListener('click', prevMonth);
-        document.querySelector('#next-month').addEventListener('click', nextMonth);
+            const quoteElement = document.getElementById("motivational-quote");
+            const randomIndex = Math.floor(Math.random() * quotes.length);
+            quoteElement.textContent = quotes[randomIndex];
+        });
 
         // Dark mode functionality
         const darkModeToggle = document.getElementById("switch");
