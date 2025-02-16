@@ -1,129 +1,110 @@
-// Dark Mode Toggle Functions
+// Dark Mode Toggle Functions (Consolidated)
 const toggleDarkMode = () => {
     const root = document.querySelector('html');
-    root.classList.toggle('dark');
-  }
-  
-  // Update local storage value for colorScheme
-  const toggleColorScheme = () => {
+    root.classList.toggle('dark'); // Use 'dark' class consistently
+}
+
+const toggleColorScheme = () => {
     const colorScheme = localStorage.getItem('colorScheme');
-    if (colorScheme === 'light') localStorage.setItem('colorScheme', 'dark');
-    else localStorage.setItem('colorScheme', 'light');
-  }
-  
-  // Set toggle input handler
-  const toggle = document.querySelector('#color-mode-switch input[type="checkbox"]');
-  if (toggle) toggle.onclick = () => {
-    toggleDarkMode();
-    toggleColorScheme();
-  }
-  
-  // Check for color scheme on init
-  const checkColorScheme = () => {
+    localStorage.setItem('colorScheme', colorScheme === 'light' ? 'dark' : 'light');
+}
+
+// Set toggle input handler (Only one toggle)
+const darkModeToggle = document.getElementById('color-mode-switch'); // Use one ID consistently
+if (darkModeToggle) {
+    darkModeToggle.addEventListener('change', () => {
+        toggleDarkMode();
+        toggleColorScheme();
+    });
+}
+
+// Check for color scheme on init
+const checkColorScheme = () => {
     const colorScheme = localStorage.getItem('colorScheme');
-    // Default to light for first view
-    if (colorScheme === null || colorScheme === undefined) localStorage.setItem('colorScheme', 'light');
-    // If previously saved to dark, toggle switch and update colors
-    if (colorScheme === 'dark') {
-      toggle.checked = true;
-      toggleDarkMode();
+    if (colorScheme === null || colorScheme === undefined) {
+        localStorage.setItem('colorScheme', 'light');
     }
-  }
-  checkColorScheme();
-  
-  // Member Since
-  const memberSinceDate = new Date('2023-03-15'); 
-  document.getElementById('member-since').textContent = memberSinceDate.toDateString();
-  
-  // Motivational Quote (Example - You'll likely fetch these from an API)
-  const quotes = [
-      "The only way to do great work is to love what you do.",
-      "Believe you can and you're halfway there.",
-      "Success is not final, failure is not fatal: It is the courage to continue that counts.",
-      "Hard work beats talent when talent doesn’t work hard.",
-      // Add more quotes as needed
-  ];
-  const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
-  document.getElementById('motivational-quote').textContent = randomQuote;
-  
-  // Calendar Generation
-  function generateCalendar(year, month) {
-      const calendarBody = document.querySelector('.calendar tbody');
-      calendarBody.innerHTML = ''; // Clear previous calendar
-  
-      const date = new Date(year, month - 1); // Month is 0-indexed
-      const firstDay = (new Date(year, month - 1)).getDay(); 
-      const daysInMonth = 32 - new Date(year, month - 1, 32).getDate();
-  
-      let dateCounter = 1;
-      for (let i = 0; i < 6; i++) { 
-          const row = calendarBody.insertRow();
-          for (let j = 0; j < 7; j++) { 
-              const cell = row.insertCell();
-              if (i === 0 && j < firstDay) {
-                  // Leave cells before the first day empty
-                  cell.textContent = '';
-              } else if (dateCounter > daysInMonth) {
-                  // Stop adding days after the end of the month
-                  break;
-              } else {
-                  cell.textContent = dateCounter;
-                  dateCounter++;
-              }
-          }
-      }
-  }
-  
-  // Initial call to generate the current month's calendar
-  const today = new Date();
-  generateCalendar(today.getFullYear(), today.getMonth() + 1);
-  
+    if (colorScheme === 'dark') {
+        if (darkModeToggle) darkModeToggle.checked = true;
+        toggleDarkMode();
+    }
+}
+checkColorScheme();
 
+// Member Since
+const memberSinceDate = new Date('2023-03-15');
+document.getElementById('member-since').textContent = memberSinceDate.toDateString();
 
-// Generate the calendar
+// Motivational Quote
+const quotes = [
+    "The only way to do great work is to love what you do.",
+    "Believe you can and you're halfway there.",
+    "Success is not final, failure is not fatal: It is the courage to continue that counts.",
+    "Hard work beats talent when talent doesn’t work hard.",
+    // Add more quotes as needed
+];
+const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+document.getElementById('motivational-quote').textContent = randomQuote;
 
-// Initialize the current date
+// Calendar Generation (Fixed potential infinite loop)
+function generateCalendar(year, month) {
+    const calendarBody = document.querySelector('.calendar tbody');
+    calendarBody.innerHTML = ''; // Clear previous calendar
+
+    const firstDay = new Date(year, month - 1).getDay();
+    const daysInMonth = new Date(year, month, 0).getDate(); // Correct way to get days in month
+
+    let dateCounter = 1;
+    for (let i = 0; i < 6; i++) {
+        const row = calendarBody.insertRow();
+        for (let j = 0; j < 7; j++) {
+            const cell = row.insertCell();
+            if (i === 0 && j < firstDay) {
+                cell.textContent = '';
+            } else if (dateCounter > daysInMonth) {
+                break; // Exit inner loop
+            } else {
+                cell.textContent = dateCounter;
+                dateCounter++;
+            }
+        }
+        if (dateCounter > daysInMonth) break; // Exit outer loop
+    }
+}
+
+// Initial call to generate the current month's calendar
+const today = new Date();
+generateCalendar(today.getFullYear(), today.getMonth() + 1);
+
+// Calendar Interaction (Improved and more concise)
 const calendarTable = document.querySelector('.calendar table tbody');
 let currentDate = new Date();
 
-// Render the calendar for the current month
 function renderCalendar() {
-    // Get the first day of the month and number of days in the month
     const firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
-    const lastDay = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
-    const daysInMonth = lastDay.getDate();
+    const daysInMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
     const firstDayOfWeek = firstDay.getDay();
-    
-    // Clear the previous calendar
+
     calendarTable.innerHTML = '';
 
-    // Create the table rows for the calendar
-    let row = document.createElement('tr');
-    
-    // Add empty cells for the days before the first day of the month
+    let row = calendarTable.insertRow();
     for (let i = 0; i < firstDayOfWeek; i++) {
-        row.appendChild(document.createElement('td'));
+        row.insertCell();
     }
 
-    // Add the days of the current month
-    for (let day = 1; day <= daysInMonth; day++) {
-        if (row.children.length === 7) {
-            calendarTable.appendChild(row);
-            row = document.createElement('tr');
+    let dayCounter = 1;
+    while (dayCounter <= daysInMonth) {
+        if (row.cells.length === 7) {
+            row = calendarTable.insertRow();
         }
-
-        const cell = document.createElement('td');
-        cell.textContent = day;
-        cell.addEventListener('click', () => alert(`You selected: ${currentDate.getMonth() + 1}/${day}/${currentDate.getFullYear()}`)); // Simple click event for selecting a date
-        row.appendChild(cell);
+        const cell = row.insertCell();
+        cell.textContent = dayCounter;
+        cell.addEventListener('click', () => {
+            alert(`You selected: ${currentDate.getMonth() + 1}/${dayCounter}/${currentDate.getFullYear()}`);
+        });
+        dayCounter++;
     }
 
-    // Append the last row if it has any remaining cells
-    if (row.children.length > 0) {
-        calendarTable.appendChild(row);
-    }
-
-    // Update the header to reflect the current month
     const monthYear = document.querySelector('.calendar h2');
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     monthYear.textContent = `${months[currentDate.getMonth()]} ${currentDate.getFullYear()}`;
@@ -156,4 +137,45 @@ if (colorModeSwitch) {
     });
 }
 
-// CSS code moved to style.css
+// Dark mode toggle functionality
+const darkModeToggleSwitch = document.getElementById("switch");
+if (darkModeToggleSwitch) {
+    darkModeToggleSwitch.addEventListener("change", () => {
+        document.body.classList.toggle("dark-mode", darkModeToggleSwitch.checked);
+    });
+}
+
+/* Dark Mode Styles */
+body.dark-mode {
+    background-color: #121212;
+    color: #ffffff;
+}
+
+
+
+
+
+
+/* Add any other dark mode styles as needed */
+body.dark-mode header,
+body.dark-mode .calendar table,
+body.dark-mode header {
+    background-color: #333;
+}
+
+
+body.dark-mode table, 
+body.dark-mode td {
+    border-color: #444;
+}
+
+body.dark-mode input[type="text"],
+body.dark-mode input[type="password"],
+body.dark-mode input[type="submit"] {
+    background-color: #555;
+    color: white;
+}
+
+body.dark-mode .menu {
+    background-color: #222;
+}
