@@ -35,7 +35,7 @@ body {
 #color-mode-switch {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: center; /* Center the toggle vertically */
   padding: 10px 20px; /* Added padding */
   position: absolute; /* Position the switch */
   top: 10px;
@@ -74,6 +74,8 @@ nav {
   display: flex;
   justify-content: center; /* Center the menu items */
   flex-grow: 1; /* Allow the nav to expand and center in the available space */
+  align-items: center;
+  margin-top: 20px;
 }
 
 /* Navigation */
@@ -166,7 +168,7 @@ main {
 }
 
 .left-side {
-  flex: 0 0 30%; /* Adjusted width using flex properties */
+  flex: 0.5  30%; /* Adjusted width using flex properties */
   padding: 20px;
   background-color: var(--color-bg2); /* Example background color */
   border-right: 1px solid var(--color-border); /* Added border */
@@ -180,6 +182,12 @@ main {
 }
 
 /* Calendar */
+#calendar {
+  max-width: 1200px; /* Adjust width */
+  height: calc(100% + 3cm); /* Adjust height */
+  margin: 0 auto;
+}
+
 .calendar table {
   width: 100%;
   border-collapse: collapse;
@@ -190,8 +198,8 @@ main {
 .calendar th, .calendar td {
   border: 1px solid var(--color-border); /* Use variable border color */
   text-align: center;
-  padding: 10px; /* Improved padding */
-  transition: border-color 0.3s ease; /* Smooth transitions */
+  padding: 15px; /* Increased padding */
+  transition: border-color 0.3s ease, background-color 0.3s ease; /* Smooth transitions */
 }
 
 .calendar th {
@@ -200,16 +208,17 @@ main {
   transition: background-color 0.3s ease; /* Smooth transitions */
 }
 
-#calendar {
-  max-width: calc(900px + 5cm); /* Adjust width */
-  height: calc(100% + 2cm); /* Adjust height */
-  margin: 0 auto;
+.fc-daygrid-day:hover {
+  background-color: #007bff; /* Set hover color to blue */
 }
 
 /* Rewards */
 .rewards {
   text-align: center; /* Center the text and podium */
   margin-top: 20px; /* Added margin */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .badge-container {
@@ -504,6 +513,13 @@ body.dark-mode .menu {
   font-size: 24px;
   border-radius: 50%;
   margin: 0 10px;
+  padding: 10px; /* Add padding */
+  cursor: pointer; /* Make clickable */
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Add transition for smooth effect */
+}
+
+.medal:hover {
+  transform: scale(1.1); /* Slightly enlarge the medal on hover */
 }
 
 .gold {
@@ -522,6 +538,9 @@ body.dark-mode .menu {
 .rewards {
   text-align: center; /* Center the text and podium */
   margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .rewards h3 {
@@ -550,6 +569,13 @@ body.dark-mode .menu {
   font-size: 24px;
   border-radius: 50%;
   margin: 0 10px;
+  padding: 10px; /* Add padding */
+  cursor: pointer; /* Make clickable */
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Add transition for smooth effect */
+}
+
+.rewards .medal:hover {
+  transform: scale(1.1); /* Slightly enlarge the medal on hover */
 }
 
 .rewards .gold {
@@ -621,4 +647,324 @@ body.dark-mode .menu {
 
 .rewards .sign-in a:hover {
   color: darken(var(--color-toggle-accent), 10%);
+}
+
+/* Center the navigation menu and style the buttons */
+nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.menu {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu li {
+  display: inline-block;
+}
+
+.menu li a {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: pink;
+  border-radius: 20px;
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.menu li a:hover {
+  background-color: #ff99cc;
+}
+
+/* Remove the little box next to Home */
+.menu-btn {
+  display: none;
+}
+
+/* Dark Mode Styles */
+body.dark-mode {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+body.dark-mode header,
+body.dark-mode .calendar table,
+body.dark-mode .user-info {
+  background-color: #333;
+}
+
+body.dark-mode table, 
+body.dark-mode td {
+  border-color: #444;
+}
+
+body.dark-mode input[type="text"],
+body.dark-mode input[type="password"],
+body.dark-mode input[type="submit"] {
+  background-color: #555;
+  color: white;
+}
+
+body.dark-mode .menu {
+  background-color: #222;
+}
+
+/* Box Container */
+.box-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.box {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.box1 {
+  background-color: red;
+}
+
+.box2 {
+  background-color: green;
+}
+
+.box3 {
+  background-color: blue;
+}
+
+/* Podium */
+.podium {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  margin-top: 10px; /* Adjust margin as needed */
+}
+
+.medal {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  border-radius: 50%;
+  margin: 0 10px;
+  padding: 10px; /* Add padding */
+  cursor: pointer; /* Make clickable */
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Add transition for smooth effect */
+}
+
+.medal:hover {
+  transform: scale(1.1); /* Slightly enlarge the medal on hover */
+}
+
+.gold {
+  background-color: gold;
+}
+
+.silver {
+  background-color: silver;
+}
+
+.bronze {
+  background-color: #cd7f32;
+}
+
+/* Rewards Section */
+.rewards {
+  text-align: center; /* Center the text and podium */
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.rewards h3 {
+  margin-bottom: 10px;
+}
+
+.rewards .badge-container {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.rewards .podium {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  margin-top: 20px;
+}
+
+.rewards .medal {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  border-radius: 50%;
+  margin: 0 10px;
+  padding: 10px; /* Add padding */
+  cursor: pointer; /* Make clickable */
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Add transition for smooth effect */
+}
+
+.rewards .medal:hover {
+  transform: scale(1.1); /* Slightly enlarge the medal on hover */
+}
+
+.rewards .gold {
+  background-color: gold;
+}
+
+.rewards .silver {
+  background-color: silver;
+}
+
+.rewards .bronze {
+  background-color: #cd7f32;
+}
+
+.rewards .sign-in {
+  padding: 20px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  transition: border-color 0.3s ease;
+}
+
+.rewards .sign-in h4 {
+  margin-bottom: 10px;
+}
+
+.rewards .sign-in label {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--color-text);
+  transition: color 0.3s ease;
+}
+
+.rewards .sign-in input[type="text"],
+.rewards .sign-in input[type="password"] {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  box-sizing: border-box;
+  background-color: var(--color-bg2);
+  color: var(--color-text);
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+.rewards .sign-in input[type="submit"] {
+  background-color: var(--color-toggle-accent);
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.rewards .sign-in input[type="submit"]:hover {
+  background-color: darken(var(--color-toggle-accent), 10%);
+}
+
+.rewards .sign-in p {
+  margin-top: 10px;
+}
+
+.rewards .sign-in a {
+  color: var(--color-toggle-accent);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.rewards .sign-in a:hover {
+  color: darken(var(--color-toggle-accent), 10%);
+}
+
+/* Center the navigation menu and style the buttons */
+nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.menu {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu li {
+  display: inline-block;
+}
+
+.menu li a {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: pink;
+  border-radius: 20px;
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.menu li a:hover {
+  background-color: #ff99cc;
+}
+
+/* Remove the little box next to Home */
+.menu-btn {
+  display: none;
+}
+
+/* Dark Mode Styles */
+body.dark-mode {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+body.dark-mode header,
+body.dark-mode .calendar table,
+body.dark-mode .user-info {
+  background-color: #333;
+}
+
+body.dark-mode table, 
+body.dark-mode td {
+  border-color: #444;
+}
+
+body.dark-mode input[type="text"],
+body.dark-mode input[type="password"],
+body.dark-mode input[type="submit"] {
+  background-color: #555;
+  color: white;
+}
+
+body.dark-mode .menu {
+  background-color: #222;
 }

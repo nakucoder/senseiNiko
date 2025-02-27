@@ -1,7 +1,7 @@
-// Dark Mode Toggle Functions (Consolidated)
+// Dark Mode Toggle Functions
 const toggleDarkMode = () => {
     const root = document.querySelector('html');
-    root.classList.toggle('dark'); // Use 'dark' class consistently
+    root.classList.toggle('dark-mode'); // Use 'dark-mode' class consistently
 }
 
 const toggleColorScheme = () => {
@@ -9,8 +9,8 @@ const toggleColorScheme = () => {
     localStorage.setItem('colorScheme', colorScheme === 'light' ? 'dark' : 'light');
 }
 
-// Set toggle input handler (Only one toggle)
-const darkModeToggle = document.getElementById('color-mode-switch'); // Use one ID consistently
+// Set toggle input handler
+const darkModeToggle = document.getElementById('switch');
 if (darkModeToggle) {
     darkModeToggle.addEventListener('change', () => {
         toggleDarkMode();

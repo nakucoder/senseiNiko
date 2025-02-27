@@ -3,28 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us - iPal Gym Trainer</title>
+    <title>About Us</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header class="header">
         <a href="#" class="logo">
+            iPal ROBOT TRAINER
             <img src="ipalRobot_image.jpg" alt="iPal Robot Trainer Logo">
         </a>
         <nav>
-            <input class="menu-btn" type="checkbox" id="menu-btn" aria-label="Toggle Navigation Menu">
-            <label class="menu-icon" for="menu-btn">
-                <span class="navicon"></span>
-            </label>
             <ul class="menu">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="contact.html">Contact</a></li>
             </ul>
         </nav>
+        <!-- Dark Mode Switch -->
         <div id="color-mode-switch" aria-hidden="true">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0л-.707.707M6.343 17.657l-.707-.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0л-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
             </svg>
             <input type="checkbox" id="switch" aria-label="Toggle Dark Mode">
             <label class="switch-icon" for="switch">Dark Mode Toggle</label>
@@ -51,7 +49,7 @@
             <img id="dog-image" src="" alt="Random Dog" style="display:none; max-width: 100%; height: auto;">
         </div>
     </main>
-
+    <footer></footer>
     <script src="script.js"></script>
     <script>
         document.getElementById('fetch-dog').addEventListener('click', function() {
