@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Add this to your <head> -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>iPal Gym Trainer</title>
@@ -29,7 +31,7 @@
         <!-- Dark Mode Switch -->
         <div id="color-mode-switch" aria-hidden="true">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0л-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
             </svg>
             <input type="checkbox" id="switch" aria-label="Toggle Dark Mode">
             <label class="switch-icon" for="switch">Dark Mode Toggle</label>
@@ -70,7 +72,7 @@
                         <input type="text" id="username" name="username" required><br><br>
                         <label for="password">Password:</label><br>
                         <input type="password" id="password" name="password" required><br><br>
-                        <input type="submit" value="Sign In">
+                        <input type="submit" value="Sign In" class="button-gradient">
                     </form>
                     <p>Not registered? <a href="#" id="register-link">Click here to register</a></p> 
                 </div> 
@@ -190,5 +192,3 @@
     </script>
 </body>
 </html>
-
-

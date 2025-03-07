@@ -1,181 +1,105 @@
-// Dark Mode Toggle Functions
-const toggleDarkMode = () => {
-    const root = document.querySelector('html');
-    root.classList.toggle('dark-mode'); // Use 'dark-mode' class consistently
-}
+// Dark Mode Toggle
+const darkModeToggle = document.getElementById("switch");
+const body = document.body;
 
-const toggleColorScheme = () => {
-    const colorScheme = localStorage.getItem('colorScheme');
-    localStorage.setItem('colorScheme', colorScheme === 'light' ? 'dark' : 'light');
-}
+darkModeToggle.addEventListener("change", () => {
+    body.classList.toggle("dark-mode", darkModeToggle.checked);
+    localStorage.setItem("dark-mode", darkModeToggle.checked);
+});
 
-// Set toggle input handler
-const darkModeToggle = document.getElementById('switch');
-if (darkModeToggle) {
-    darkModeToggle.addEventListener('change', () => {
-        toggleDarkMode();
-        toggleColorScheme();
-    });
+// Check for saved dark mode preference
+if (localStorage.getItem("dark-mode") === "true") {
+    darkModeToggle.checked = true;
+    body.classList.add("dark-mode");
 }
-
-// Check for color scheme on init
-const checkColorScheme = () => {
-    const colorScheme = localStorage.getItem('colorScheme');
-    if (colorScheme === null || colorScheme === undefined) {
-        localStorage.setItem('colorScheme', 'light');
-    }
-    if (colorScheme === 'dark') {
-        if (darkModeToggle) darkModeToggle.checked = true;
-        toggleDarkMode();
-    }
-}
-checkColorScheme();
-
-// Member Since
-const memberSinceDate = new Date('2023-03-15');
-document.getElementById('member-since').textContent = memberSinceDate.toDateString();
 
 // Motivational Quote
 const quotes = [
-    "The only way to do great work is to love what you do.",
+    "You miss 100% of the shots you don’t take.",
+    "The journey of a thousand miles begins with one step.",
     "Believe you can and you're halfway there.",
     "Success is not final, failure is not fatal: It is the courage to continue that counts.",
-    "Hard work beats talent when talent doesn’t work hard.",
-    // Add more quotes as needed
+    "It’s not whether you get knocked down, it’s whether you get up.",
+    "Winners never quit and quitters never win.",
+    "Persistence can change failure into extraordinary achievement.",
+    "Nobody who ever gave his best regretted it.",
+    "The harder the battle, the sweeter the victory.",
+    "If you can believe it, the mind can achieve it.",
+    "There may be people that have more talent than you, but there’s no excuse for anyone to work harder than you do.",
+    "Ever tried. Ever failed. No matter. Try Again. Fail again. Fail better."
 ];
-const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
-document.getElementById('motivational-quote').textContent = randomQuote;
 
-// Calendar Generation (Fixed potential infinite loop)
-function generateCalendar(year, month) {
-    const calendarBody = document.querySelector('.calendar tbody');
-    calendarBody.innerHTML = ''; // Clear previous calendar
+const quoteElement = document.getElementById("motivational-quote");
+const randomIndex = Math.floor(Math.random() * quotes.length);
+quoteElement.textContent = quotes[randomIndex];
 
-    const firstDay = new Date(year, month - 1).getDay();
-    const daysInMonth = new Date(year, month, 0).getDate(); // Correct way to get days in month
+// Progress Bar Animation
+const progressBar = document.querySelector(".progress");
+setTimeout(() => {
+    progressBar.style.width = "75%"; // Example progress
+}, 500);
 
-    let dateCounter = 1;
-    for (let i = 0; i < 6; i++) {
-        const row = calendarBody.insertRow();
-        for (let j = 0; j < 7; j++) {
-            const cell = row.insertCell();
-            if (i === 0 && j < firstDay) {
-                cell.textContent = '';
-            } else if (dateCounter > daysInMonth) {
-                break; // Exit inner loop
-            } else {
-                cell.textContent = dateCounter;
-                dateCounter++;
-            }
-        }
-        if (dateCounter > daysInMonth) break; // Exit outer loop
-    }
-}
+// Custom Cursor
+const cursor = document.createElement("div");
+cursor.classList.add("cursor");
+document.body.appendChild(cursor);
 
-// Initial call to generate the current month's calendar
-const today = new Date();
-generateCalendar(today.getFullYear(), today.getMonth() + 1);
+document.addEventListener("mousemove", (e) => {
+    cursor.style.left = `${e.pageX}px`;
+    cursor.style.top = `${e.pageY}px`;
+});
 
-// Calendar Interaction (Improved and more concise)
-const calendarTable = document.querySelector('.calendar table tbody');
-let currentDate = new Date();
+// Loading Animation
+window.addEventListener("load", () => {
+    const loading = document.querySelector(".loading");
+    setTimeout(() => {
+        loading.style.display = "none";
+    }, 1000); // Simulate loading time
+});
 
-function renderCalendar() {
-    const firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
-    const daysInMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
-    const firstDayOfWeek = firstDay.getDay();
-
-    calendarTable.innerHTML = '';
-
-    let row = calendarTable.insertRow();
-    for (let i = 0; i < firstDayOfWeek; i++) {
-        row.insertCell();
-    }
-
-    let dayCounter = 1;
-    while (dayCounter <= daysInMonth) {
-        if (row.cells.length === 7) {
-            row = calendarTable.insertRow();
-        }
-        const cell = row.insertCell();
-        cell.textContent = dayCounter;
-        cell.addEventListener('click', () => {
-            alert(`You selected: ${currentDate.getMonth() + 1}/${dayCounter}/${currentDate.getFullYear()}`);
+// Smooth Scroll
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener("click", function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute("href")).scrollIntoView({
+            behavior: "smooth"
         });
-        dayCounter++;
-    }
-
-    const monthYear = document.querySelector('.calendar h2');
-    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-    monthYear.textContent = `${months[currentDate.getMonth()]} ${currentDate.getFullYear()}`;
-}
-
-// Navigate to the previous month
-function prevMonth() {
-    currentDate.setMonth(currentDate.getMonth() - 1);
-    renderCalendar();
-}
-
-// Navigate to the next month
-function nextMonth() {
-    currentDate.setMonth(currentDate.getMonth() + 1);
-    renderCalendar();
-}
-
-// Initial render of the calendar
-renderCalendar();
-
-// Attach event listeners to the navigation buttons
-document.querySelector('#prev-month').addEventListener('click', prevMonth);
-document.querySelector('#next-month').addEventListener('click', nextMonth);
-
-// Dark mode toggle functionality
-const colorModeSwitch = document.getElementById('color-mode-switch');
-if (colorModeSwitch) {
-    colorModeSwitch.addEventListener('click', () => {
-        document.body.classList.toggle('dark-mode');
     });
+});
+// Parallax Scrolling Effect
+window.addEventListener("scroll", () => {
+    const scrollY = window.scrollY;
+    document.body.style.backgroundPositionY = `-${scrollY * 0.5}px`;
+});
+
+// Dynamic Content Loading
+function loadGoals() {
+    const goals = ["Run 5km", "Lift 100kg", "Meditate Daily"];
+    const goalsList = document.querySelector(".user-info ul");
+    goalsList.innerHTML = goals.map(goal => `<li>${goal}</li>`).join("");
+    goalsList.classList.add("dynamic-content");
 }
 
-// Dark mode toggle functionality
-const darkModeToggleSwitch = document.getElementById("switch");
-if (darkModeToggleSwitch) {
-    darkModeToggleSwitch.addEventListener("change", () => {
-        document.body.classList.toggle("dark-mode", darkModeToggleSwitch.checked);
+function loadRewards() {
+    const rewards = ["🏆", "🎖️", "🥇"];
+    const badgeContainer = document.querySelector(".badge-container");
+    badgeContainer.innerHTML = rewards.map(reward => `<div class="badge">${reward}</div>`).join("");
+    badgeContainer.classList.add("dynamic-content");
+}
+
+// Simulate loading dynamic content
+setTimeout(() => {
+    loadGoals();
+    loadRewards();
+}, 1000);
+
+// Animated Gradient Buttons
+const buttons = document.querySelectorAll(".button-gradient");
+buttons.forEach(button => {
+    button.addEventListener("mousemove", (e) => {
+        const rect = button.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width * 100;
+        const y = (e.clientY - rect.top) / rect.height * 100;
+        button.style.backgroundPosition = `${x}% ${y}%`;
     });
-}
-
-/* Dark Mode Styles */
-body.dark-mode {
-    background-color: #121212;
-    color: #ffffff;
-}
-
-
-
-
-
-
-/* Add any other dark mode styles as needed */
-body.dark-mode header,
-body.dark-mode .calendar table,
-body.dark-mode header {
-    background-color: #333;
-}
-
-
-body.dark-mode table, 
-body.dark-mode td {
-    border-color: #444;
-}
-
-body.dark-mode input[type="text"],
-body.dark-mode input[type="password"],
-body.dark-mode input[type="submit"] {
-    background-color: #555;
-    color: white;
-}
-
-body.dark-mode .menu {
-    background-color: #222;
-}
+});
