@@ -1,37 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Add this to your <head> -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap">
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>iPal Gym Trainer</title>
+    <title>iPalWebsite2.0</title>
     <link rel="stylesheet" href="style.css">
-    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.css' rel='stylesheet' />
-    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js'></script>
 </head>
 <body>
-    <!-- Header Section -->
     <header class="header">
-        <!-- Logo -->
         <a href="#" class="logo">
+            <img src="ipalRobot_image.jpg" alt="iPal Robot Trainer Logo" class="circle-image">
             iPal ROBOT TRAINER
-            <!-- Add the image here -->
-            <img src="ipalRobot_image.jpg" alt="iPal Robot Trainer Logo">
         </a>
         <nav>
-            <!-- Menu -->
+            <button id="menu-toggle" aria-label="Open navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
             <ul class="menu">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="about.html">About</a></li>
-                <li><a href="contact.html">Contact</a></li> 
+                <li><a href="contact.html">Contact</a></li>
             </ul>
         </nav>
+    </header>
 
-        <!-- Dark Mode Switch -->
+    <main>
+        <section class="login-section">
+            <form action="login.php" method="post" class="login-form">
+                <h2>Login</h2>
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+
+                <button type="submit">Login</button>
+
+                <p class="register-link">Not registered? <a href="register.html">Click here</a></p>
+            </form>
+        </section>
+    </main>
+
+    <footer>
         <div id="color-mode-switch" aria-hidden="true">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0л-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
             </svg>
             <input type="checkbox" id="switch" aria-label="Toggle Dark Mode">
             <label class="switch-icon" for="switch">Dark Mode Toggle</label>
@@ -39,156 +55,8 @@
                 <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
             </svg>
         </div>
-    </header>
+    </footer>
 
-    <main>
-        <div class="left-side">
-            <div class="user-info">
-                <h3>Goals Listed</h3>
-                <ul></ul>
-                <p class="quote" id="motivational-quote"></p> <!-- Quote is now inside the user-info div -->
-                <p>Member Since: <span id="member-since"></span></p> 
-            </div>
-
-            <!-- New FullCalendar Container -->
-            <div id="calendar"></div>
-        </div>
-
-        <div class="right-side">
-            <div class="rewards">
-                <h3>Rewards Collected Recently</h3>
-                <div class="badge-container"></div>
-
-                <div class="podium">
-                    <div class="medal gold" onclick="alert('Gold Medal Clicked!')">🥇</div>
-                    <div class="medal silver" onclick="alert('Silver Medal Clicked!')">🥈</div>
-                    <div class="medal bronze" onclick="alert('Bronze Medal Clicked!')">🥉</div>
-                </div>
-
-                <div class="sign-in"> 
-                    <h4>Sign In</h4>
-                    <form id="sign-in-form"> 
-                        <label for="username">Username:</label><br>
-                        <input type="text" id="username" name="username" required><br><br>
-                        <label for="password">Password:</label><br>
-                        <input type="password" id="password" name="password" required><br><br>
-                        <input type="submit" value="Sign In" class="button-gradient">
-                    </form>
-                    <p>Not registered? <a href="#" id="register-link">Click here to register</a></p> 
-                </div> 
-            </div>
-        </div>
-    </main>
-
-    <script>
-        document.getElementById('sign-in-form').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-
-            fetch('http://localhost:3000/api/signin', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ username, password })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('Sign in successful!');
-                    // Redirect to a different page or update the UI
-                } else {
-                    alert('Sign in failed: ' + data.message);
-                }
-            })
-            .catch(error => console.error('Error:', error));
-        });
-
-        document.getElementById('register-link').addEventListener('click', function(event) {
-            event.preventDefault();
-            const username = prompt('Enter a username:');
-            const password = prompt('Enter a password:');
-
-            fetch('http://localhost:3000/api/register', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ username, password })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('Registration successful!');
-                } else {
-                    alert('Registration failed: ' + data.message);
-                }
-            })
-            .catch(error => console.error('Error:', error));
-        });
-    </script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var calendarEl = document.getElementById('calendar');
-
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth',
-                headerToolbar: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
-                },
-                events: [
-                    {
-                        title: 'Event 1',
-                        start: '2025-02-01'
-                    },
-                    {
-                        title: 'Event 2',
-                        start: '2025-02-05',
-                        end: '2025-02-07'
-                    },
-                    {
-                        title: 'Event 3',
-                        start: '2025-02-09T12:30:00',
-                        allDay: false // will make the time show
-                    }
-                ],
-                dateClick: function(info) {
-                    calendar.changeView('timeGridDay', info.dateStr); // Navigate to the clicked day
-                }
-            });
-
-            calendar.render();
-
-            const quotes = [
-                "You miss 100% of the shots you don’t take.",
-                "The journey of a thousand miles begins with one step.",
-                "Believe you can and you're halfway there.",
-                "Success is not final, failure is not fatal: It is the courage to continue that counts.",
-                "You miss 100% of the shots you don’t take.",
-                "It’s not whether you get knocked down, it’s whether you get up.",
-                "Winners never quit and quitters never win.",
-                "Persistence can change failure into extraordinary achievement.",
-                "Nobody who ever gave his best regretted it.",
-                "The harder the battle, the sweeter the victory.",
-                "If you can believe it, the mind can achieve it.",
-                "There may be people that have more talent than you, but there’s no excuse for anyone to work harder than you do.",
-                "Ever tried. Ever failed. No matter. Try Again. Fail again. Fail better."
-            ];
-
-            const quoteElement = document.getElementById("motivational-quote");
-            const randomIndex = Math.floor(Math.random() * quotes.length);
-            quoteElement.textContent = quotes[randomIndex];
-        });
-
-        // Dark mode functionality
-        const darkModeToggle = document.getElementById("switch");
-        darkModeToggle.addEventListener("change", () => {
-            document.body.classList.toggle("dark-mode", darkModeToggle.checked);
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>

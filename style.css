@@ -1,440 +1,354 @@
-/* General Styles */
-:root {
-  --primary-color: #4a90e2;
-  --secondary-color: #ffdd57;
-  --background-light: #f4f4f9;
-  --background-dark: #1a1a1a;
-  --text-light: #333;
-  --text-dark: #f4f4f9;
-  --card-bg-light: rgba(255, 255, 255, 0.8);
-  --card-bg-dark: rgba(44, 44, 44, 0.8);
-  --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  --glass-border: rgba(255, 255, 255, 0.1);
-}
-
+/* --- General Styles --- */
 body {
-  font-family: 'Poppins', sans-serif;
   margin: 0;
-  padding: 0;
-  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-  background-size: 400% 400%;
-  animation: gradientBG 15s ease infinite;
-  color: var(--text-light);
-  transition: background-color 0.3s, color 0.3s;
-}
-
-@keyframes gradientBG {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-body.dark-mode {
-  background: linear-gradient(-45deg, #1a1a1a, #333, #444, #555);
-  color: var(--text-dark);
-}
-
-/* Header Section */
-.header {
+  font-family: Arial, sans-serif;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 2rem;
-  background-color: rgba(74, 144, 226, 0.8);
-  backdrop-filter: blur(10px);
-  color: white;
-  box-shadow: var(--shadow);
-  position: sticky;
-  top: 0;
-  z-index: 1000;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
-.header.dark-mode {
-  background-color: rgba(51, 51, 51, 0.8);
+/* --- Header Styles --- */
+.header {
+  background-color: #333;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .logo {
   display: flex;
   align-items: center;
-  font-size: 1.5rem;
-  font-weight: bold;
-  text-decoration: none;
+  justify-content: center;
   color: white;
+  text-decoration: none;
+  margin-bottom: 10px;
 }
 
-.logo img {
-  height: 40px;
-  margin-right: 10px;
+.circle-image {
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
-  border: 2px solid white;
+  margin-right: 10px;
+  object-fit: cover;
+}
+
+/* --- Mobile Styles (Default) --- */
+nav {
+  background-color: #333;
+  padding: 20px 0 10px 0;
+  position: relative;
 }
 
 .menu {
   list-style: none;
-  display: flex;
-  gap: 1.5rem;
+  display: none;
+  flex-direction: column;
+  align-items: center;
   margin: 0;
   padding: 0;
 }
 
-.menu a {
-  text-decoration: none;
-  color: white;
-  font-weight: 500;
-  transition: color 0.3s;
-}
-
-.menu a:hover {
-  color: var(--secondary-color);
-}
-
-/* Dark Mode Switch */
-#color-mode-switch {
+.menu.open {
   display: flex;
-  align-items: center;
-  gap: 0.5rem;
 }
 
-.switch-icon {
-  cursor: pointer;
-}
-
-/* Main Content */
-main {
-  display: flex;
-  padding: 2rem;
-  gap: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.left-side, .right-side {
-  flex: 1;
-  background-color: var(--card-bg-light);
-  backdrop-filter: blur(10px);
-  padding: 1.5rem;
-  border-radius: 8px;
-  box-shadow: var(--shadow);
-  border: 1px solid var(--glass-border);
-  transition: background-color 0.3s, color 0.3s;
-}
-
-.left-side.dark-mode, .right-side.dark-mode {
-  background-color: var(--card-bg-dark);
-  color: var(--text-dark);
-}
-
-.user-info {
-  margin-bottom: 2rem;
-}
-
-.user-info h3 {
-  margin-bottom: 1rem;
-  color: var(--primary-color);
-}
-
-.user-info ul {
-  list-style: none;
-  padding: 0;
-}
-
-.user-info ul li {
-  margin-bottom: 0.5rem;
-}
-
-.quote {
-  font-style: italic;
-  color: #666;
-  margin-top: 1rem;
-}
-
-.quote.dark-mode {
-  color: #ccc;
-}
-
-/* Progress Bar */
-.progress-bar {
+.menu li {
   width: 100%;
-  height: 10px;
-  background-color: #e0e0e0;
-  border-radius: 5px;
-  margin-top: 1rem;
-  overflow: hidden;
-}
-
-.progress {
-  height: 100%;
-  background-color: var(--primary-color);
-  width: 0;
-  transition: width 0.5s ease;
-}
-
-/* Calendar */
-#calendar {
-  margin-top: 1rem;
-  background-color: rgba(255, 255, 255, 0.8);
-  border-radius: 8px;
-  padding: 1rem;
-  box-shadow: var(--shadow);
-  backdrop-filter: blur(10px);
-}
-
-#calendar.dark-mode {
-  background-color: rgba(44, 44, 44, 0.8);
-  color: var(--text-dark);
-}
-
-/* Rewards Section */
-.rewards {
   text-align: center;
 }
 
-.rewards h3 {
-  margin-bottom: 1rem;
-  color: var(--primary-color);
+.menu li:last-child {
+  margin-bottom: 0;
 }
 
-.badge-container {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  margin-bottom: 1rem;
-}
-
-.badge {
-  width: 50px;
-  height: 50px;
-  background-color: var(--primary-color);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.menu li a {
   color: white;
-  font-size: 1.2rem;
-  transition: transform 0.3s, box-shadow 0.3s;
+  text-decoration: none;
+  font-size: 20px;
+  padding: 10px 15px;
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  transition: background-color 0.3s;
 }
 
-.badge:hover {
-  transform: scale(1.1);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+.menu li a:hover {
+  background-color: #555;
 }
 
-/* Medals Section */
-.podium {
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  gap: 1.5rem;
-  margin-bottom: 2rem;
-  height: 150px;
-}
-
-.medal {
-  width: 80px;
-  height: 80px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
+/* --- Hamburger Button Styles --- */
+#menu-toggle {
   cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  position: relative;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.4));
-  backdrop-filter: blur(10px);
-  border: 2px solid transparent;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  animation: float 3s ease-in-out infinite;
-}
-
-.medal:hover {
-  transform: scale(1.1);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-}
-
-.medal::before {
-  content: '';
   position: absolute;
-  top: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 20px;
-  height: 20px;
-  background-color: rgba(255, 255, 255, 0.8);
-  border-radius: 50%;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  height: 25px;
+  background: transparent;
+  border: none;
+  z-index: 100;
 }
 
-.medal::after {
-  content: attr(data-tooltip);
-  position: absolute;
-  bottom: -30px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: var(--primary-color);
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  font-size: 0.9rem;
+#menu-toggle span {
+  display: block;
+  width: 100%;
+  height: 3px;
+  background-color: blue;
+  margin-bottom: 5px;
+  transition: all 0.3s ease;
+  border-radius: 2px;
+}
+
+#menu-toggle span:last-child {
+  margin-bottom: 0;
+}
+
+/* --- Hamburger Animation --- */
+#menu-toggle.open span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+  background-color: red;
+}
+
+#menu-toggle.open span:nth-child(2) {
   opacity: 0;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
+  background-color: red;
 }
 
-.medal:hover::after {
-  opacity: 1;
+#menu-toggle.open span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+  background-color: red;
 }
 
-.medal svg {
-  width: 40px;
-  height: 40px;
-  fill: currentColor;
-  transition: transform 0.3s ease;
-}
-
-.medal:hover svg {
-  transform: rotate(15deg);
-}
-
-/* Medal Colors */
-.gold {
-  color: #ffd700;
-  border-color: #ffd700;
-  background: radial-gradient(circle, #ffd700, #ffec8b);
-}
-
-.silver {
-  color: #c0c0c0;
-  border-color: #c0c0c0;
-  background: radial-gradient(circle, #c0c0c0, #e0e0e0);
-}
-
-.bronze {
-  color: #cd7f32;
-  border-color: #cd7f32;
-  background: radial-gradient(circle, #cd7f32, #e0a96d);
-}
-
-/* Floating Animation */
-@keyframes float {
-  0%, 100% {
-      transform: translateY(0);
+/* --- Desktop Styles (Larger Screens) --- */
+@media (min-width: 769px) {
+  .menu {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-evenly;
   }
-  50% {
-      transform: translateY(-10px);
+
+  nav .menu li {
+      width: auto;
+      margin-bottom: 0;
+      text-align: initial;
+  }
+
+  nav .menu li a {
+      display: initial;
+      width: auto;
+      box-sizing: border-box;
+  }
+
+  .menu li a:hover {
+      border-radius: 5px;
+  }
+
+  #menu-toggle {
+      display: none;
+  }
+
+  .menu li {
+      width: auto;
+  }
+
+  .menu li a {
+      width: auto;
+  }
+
+  nav {
+      padding: 10px 0;
+      position: static;
+      margin-top: 10px;
+  }
+
+  #menu-toggle {
+      position: fixed;
+  }
+
+  .header {
+      padding-bottom: 0;
   }
 }
 
-/* Sign-In Form */
-.sign-in {
-  margin-top: 2rem;
+/* --- Contact Page Specific Styles --- */
+.contact-content {
+  padding: 20px;
 }
 
-.sign-in h4 {
-  margin-bottom: 1rem;
-  color: var(--primary-color);
+/* --- Dark Mode Styles --- */
+body.dark-mode {
+  background-color: #121212;
+  color: #fff;
 }
 
-.sign-in form {
+body.dark-mode .header,
+body.dark-mode nav {
+  background-color: #1e1e1e;
+}
+
+body.dark-mode .menu li a {
+  color: #fff;
+  background-color: #1e1e1e;
+}
+
+body.dark-mode .menu li a:hover {
+  background-color: #383838;
+}
+
+body.dark-mode #menu-toggle span {
+  background-color: #00f;
+}
+
+body.dark-mode #menu-toggle.open span {
+  background-color: #f00;
+}
+
+body.dark-mode #color-mode-switch svg {
+  fill: #000;
+}
+
+/* Style the dark mode switch */
+#color-mode-switch {
   display: flex;
-  flex-direction: column;
-  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
 }
 
-.sign-in input {
-  padding: 0.5rem;
+#color-mode-switch svg {
+  width: 24px;
+  height: 24px;
+  margin: 0 5px;
+}
+
+footer {
+  background-color: #333;
+}
+
+body.dark-mode footer {
+  background-color: #1e1e1e;
+}
+
+main {
+  flex-grow: 1;
+}
+/* --- About Page Styles --- */
+.about-page .about-content { /* Scoped to .about-page */
+  padding: 20px;
+  text-align: center;
+}
+.about-page .about-content h1{
+text-align: center;
+}
+
+.about-page .about-image { /* Scoped to .about-page */
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 20px auto;
+  border-radius: 10px;
+}
+
+.about-page #dog-container { /* Scoped to .about-page */
+  margin-top: 20px;
+  text-align: center;
+}
+
+.about-page .dog-image { /* Scoped to .about-page */
+  max-width: 100%;
+height: auto;
+margin-top: .5rem;
+  display: none;
+  border-radius: 10px;
+}
+/*dark mode for about*/
+body.dark-mode .about-page .about-content{
+background-color: #1e1e1e;
+}
+/* --- Login Form Styles --- */
+.login-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* Removed min-height:  We're using flex-grow on main now */
+}
+
+.login-form {
+  background-color: #f0f0f0;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%; /* Take full width on mobile */
+  max-width: 400px; /* Limit width on larger screens */
+  box-sizing: border-box; /* Include padding in width */
+}
+
+.login-form h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.login-form label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.login-form input[type="text"],
+.login-form input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  font-size: 1rem;
+  box-sizing: border-box; /* Include padding and border in width */
 }
 
-.sign-in input[type="submit"] {
-  background-color: var(--primary-color);
+.login-form button[type="submit"] {
+  width: 100%;
+  padding: 10px;
+  background-color: #4CAF50;
   color: white;
   border: none;
+  border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s;
 }
 
-.sign-in input[type="submit"]:hover {
-  background-color: #357abd;
+.login-form button[type="submit"]:hover {
+  background-color: #45a049;
 }
 
-.sign-in a {
-  color: var(--primary-color);
+.register-link {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.register-link a {
+  color: #007bff;
   text-decoration: none;
-  transition: color 0.3s;
 }
 
-.sign-in a:hover {
-  color: var(--secondary-color);
+.register-link a:hover {
+  text-decoration: underline;
 }
 
-/* Custom Cursor */
-.cursor {
-  width: 20px;
-  height: 20px;
-  border: 2px solid var(--primary-color);
-  border-radius: 50%;
-  position: absolute;
-  pointer-events: none;
-  transform: translate(-50%, -50%);
-  transition: transform 0.1s ease-out;
-  z-index: 1000;
+/* Dark Mode Styles for the Form */
+body.dark-mode .login-form{
+  background-color: #383838;
+  box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1); /*White shadow*/
 }
-
-/* Loading Animation */
-.loading {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: var(--background-light);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 10000;
+body.dark-mode .login-form input[type="text"],
+body.dark-mode .login-form input[type="password"]{
+  background-color: #1e1e1e;
+  color: #fff;
+  border: 1px solid #555;
 }
-
-.loading.dark-mode {
-  background-color: var(--background-dark);
+body.dark-mode .login-form button[type="submit"]{
+background-color: #0056b3;
 }
-
-.loading-spinner {
-  border: 4px solid rgba(0, 0, 0, 0.1);
-  border-top: 4px solid var(--primary-color);
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-/* About Page Image */
-.about-content img {
-  max-width: 100%; /* Ensures the image doesn't exceed its container's width */
-  height: auto; /* Maintains the image's aspect ratio */
-  border-radius: 8px; /* Adds rounded corners */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adds a subtle shadow */
-  margin: 1rem 0; /* Adds some spacing around the image */
-  display: block; /* Ensures the image behaves as a block element */
-  width: 50%; /* Adjust this value to control the image's width */
-  margin-left: auto; /* Centers the image horizontally */
-  margin-right: auto; /* Centers the image horizontally */
-}
-/* Responsive Design for Smaller Screens */
-@media (max-width: 768px) {
-  .about-content img {
-      width: 80%; /* Increase width for smaller screens */
-  }
-}
-
-@media (max-width: 480px) {
-  .about-content img {
-      width: 100%; /* Full width on very small screens */
-  }
+body.dark-mode .register-link a{
+color: #66b3ff;
 }
