@@ -5,6 +5,11 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  overflow-x: hidden; /* Prevent horizontal scroll on the body */
+}
+
+*, *::before, *::after {  /* VERY IMPORTANT */
+  box-sizing: border-box;
 }
 
 /* --- Header Styles --- */
@@ -171,6 +176,15 @@ nav {
   .header {
       padding-bottom: 0;
   }
+ /* Limit About Image Size on Desktop */
+  .about-page .about-image {
+      max-width: 300px; /*  Fixed width on DESKTOP  */
+      /* OR, use a percentage of viewport width: */
+      /* max-width: 30vw;  */
+  }
+.about-page .dog-image{
+  max-width: 300px;
+}
 }
 
 /* --- Contact Page Specific Styles --- */
@@ -234,6 +248,7 @@ body.dark-mode footer {
 
 main {
   flex-grow: 1;
+  overflow-x: hidden; /* Prevent horizontal scroll within main */
 }
 /* --- About Page Styles --- */
 .about-page .about-content { /* Scoped to .about-page */
@@ -245,7 +260,7 @@ text-align: center;
 }
 
 .about-page .about-image { /* Scoped to .about-page */
-  max-width: 100%;
+max-width: 80%;       /* Default: 80% of the container on MOBILE */
   height: auto;
   display: block;
   margin: 20px auto;
@@ -258,9 +273,9 @@ text-align: center;
 }
 
 .about-page .dog-image { /* Scoped to .about-page */
-  max-width: 100%;
-height: auto;
-margin-top: .5rem;
+max-width: 80%;       /* Default: 80% of the container on MOBILE */
+  height: auto;
+  margin-top: 0.5rem;
   display: none;
   border-radius: 10px;
 }
@@ -351,4 +366,76 @@ background-color: #0056b3;
 }
 body.dark-mode .register-link a{
 color: #66b3ff;
+}
+.error-message {
+  color: red;
+  margin-top: 10px;
+  text-align: center; /* Center the error message */
+}
+/*Dark mode for error*/
+body.dark-mode .error-message{
+color: #f00;
+}
+
+/* --- Trophy Styles --- */
+.trophy-section {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 20px;
+  background-color: #f8f8f8;
+  border-bottom: 1px solid #eee;
+}
+
+.trophy {
+  text-align: center;
+  cursor: pointer;
+  flex: 1;
+  max-width: 100px;
+  margin: 0 10px;
+  transition: transform 0.3s ease; /* Add transition here */
+}
+/* Hover effect - now includes animation */
+.trophy:hover i{
+  animation: spin 0.5s linear;
+  transform-origin: center;
+}
+
+.trophy i {
+  font-size: 3rem;
+  color: #ffd700; /* Default: Gold color */
+  margin-bottom: 5px;
+  transition: transform 0.3s ease;
+}
+
+/* Specific trophy colors */
+#gold-trophy i { color: #ffd700; }
+#silver-trophy i { color: #c0c0c0; }
+#bronze-trophy i { color: #cd7f32; }
+
+.trophy span {
+  display: block;
+  font-size: 1rem;
+}
+
+/* --- Keyframes for the Spin Animation --- */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Dark Mode for Trophies */
+body.dark-mode .trophy-section {
+  background-color: #1e1e1e;
+  border-bottom: 1px solid #333;
+}
+
+body.dark-mode .trophy span {
+  color: #fff;
+}
+/* --- Only apply hover styles on devices that support hover --- */
+@media (hover: hover) {
+  .trophy:hover i {
+      animation: spin 0.5s linear;
+  }
 }
