@@ -4,14 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>iPalWebsite2.0</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header class="header">
-        <a href="#" class="logo">
-            <img src="ipalRobot_image.jpg" alt="iPal Robot Trainer Logo" class="circle-image">
-            iPal ROBOT TRAINER
-        </a>
         <nav>
             <button id="menu-toggle" aria-label="Open navigation">
                 <span></span>
@@ -24,25 +21,32 @@
                 <li><a href="contact.html">Contact</a></li>
             </ul>
         </nav>
+        <span class="header-text">iPal ROBOT TRAINER</span>
     </header>
 
     <main>
-        <section class="login-section">
-            <form class="login-form" id="login-form">
-                <h2>Login</h2>
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" required>
+        <div class="main-content">
+            <section class="logo-section">
+                <img src="ipalRobot_image.jpg" alt="iPal Robot Trainer Logo" class="circle-image">
+            </section>
 
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
+            <section class="login-section">
+                <form class="login-form" id="login-form">
+                    <h2>Login</h2>
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required>
 
-                <button type="submit">Login</button>
-                <p id="login-error-message" class="error-message"></p>
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
 
-                <p class="register-link">Not registered? <a href="#" onclick="alert('Registration is not yet implemented.'); return false;">Click here</a></p>
-            </form>
-        </section>
-    </main>
+                    <button type="submit">Login</button>
+                    <p id="login-error-message" class="error-message"></p>
+
+                    <p class="register-link">Not registered? <a href="#" onclick="alert('Registration is not yet implemented.'); return false;">Click here</a></p>
+                </form>
+            </section>
+        </div>
+</main>
 
     <footer>
        <div id="color-mode-switch" aria-hidden="true">

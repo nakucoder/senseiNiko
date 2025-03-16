@@ -5,10 +5,11 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  overflow-x: hidden; /* Prevent horizontal scroll on the body */
+  overflow-x: hidden;
+  word-wrap: break-word;
 }
 
-*, *::before, *::after {  /* VERY IMPORTANT */
+*, *::before, *::after {
   box-sizing: border-box;
 }
 
@@ -16,57 +17,81 @@ body {
 .header {
   background-color: #333;
   color: white;
-  padding: 20px;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  padding: 10px 20px;
+  text-align: center; /* Center everything on mobile */
+  display: flex;          /* Use Flexbox */
+  flex-direction: column; /* Stack text and nav vertically (mobile-first) */
+  align-items: center;      /* Center horizontally (mobile) */
+  justify-content: space-between; /* Added to distribute space */
 }
 
-.logo {
+.logo-link {
+  display: inline-block;
+}
+
+.header-logo {
+  width: 50px; /* Adjust this value to control the logo size in the header */
+  height: auto; /* Maintain aspect ratio */
+  vertical-align: middle;
+  margin-right: 10px; /* Add some spacing between the logo and navigation */
+  border-radius: 50%; /* Make the header logo circular */
+  object-fit: contain; /* Ensure the image fits within the circle */
+}
+
+.header-text {
+  font-size: 1.5rem; /* Or whatever size you want */
+  font-weight: bold;
+  margin-bottom: 10px; /* Space between text and nav on mobile */
+  order: 1;              /* Place text AFTER the nav on mobile */
+}
+
+/* --- Logo Image Styles --- */
+.logo-section {
   display: flex;
+  justify-content: center; /* Center the logo horizontally */
   align-items: center;
-  justify-content: center;
-  color: white;
-  text-decoration: none;
+  padding: 20px;
+  max-width: 400px; /* Match the max-width of the login form */
+  width: 100%; /* Ensure it takes the full width of its container */
+}
+
+.logo-image {
   margin-bottom: 10px;
 }
-
 .circle-image {
-  width: 50px;
-  height: 50px;
   border-radius: 50%;
-  margin-right: 10px;
-  object-fit: cover;
+  object-fit: contain; /* Or 'cover' depending on desired effect */
+  max-width: 100%; /* Make the image scale within its container */
+  max-height: 400px; /* Limit the maximum height to match login form */
+  width: auto;
+  height: auto;
 }
 
-/* --- Mobile Styles (Default) --- */
+/* --- Navigation Styles --- */
 nav {
-  background-color: #333;
-  padding: 20px 0 10px 0;
-  position: relative;
+  background-color: #333; /* Consistent background */
+  padding: 0;          /* Remove padding, let menu items have padding */
+  position: relative; /* For hamburger positioning */
+  width: 100%;
+  order: 2;              /* Place nav BEFORE the text on mobile*/
 }
 
 .menu {
   list-style: none;
-  display: none;
-  flex-direction: column;
+  display: none; /* Hidden by default (mobile) */
+  flex-direction: column; /* Stack links vertically (mobile) */
   align-items: center;
   margin: 0;
   padding: 0;
 }
 
 .menu.open {
-  display: flex;
+  display: flex; /* Show when hamburger is clicked */
 }
 
 .menu li {
   width: 100%;
   text-align: center;
-}
-
-.menu li:last-child {
-  margin-bottom: 0;
 }
 
 .menu li a {
@@ -76,8 +101,8 @@ nav {
   padding: 10px 15px;
   display: block;
   width: 100%;
-  box-sizing: border-box;
   transition: background-color 0.3s;
+  box-sizing: border-box;
 }
 
 .menu li a:hover {
@@ -111,7 +136,7 @@ nav {
   margin-bottom: 0;
 }
 
-/* --- Hamburger Animation --- */
+/* Hamburger Animation */
 #menu-toggle.open span:nth-child(1) {
   transform: translateY(8px) rotate(45deg);
   background-color: red;
@@ -129,12 +154,31 @@ nav {
 
 /* --- Desktop Styles (Larger Screens) --- */
 @media (min-width: 769px) {
+  .header {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+  }
+
+  .header-text {
+      margin-bottom: 0;
+      order: 0;
+      margin-right: auto;
+      margin-left: auto;
+  }
+  nav {
+      padding: 0;
+      width: auto;
+      order: 3;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+  }
+
   .menu {
       display: flex;
       flex-direction: row;
-      justify-content: space-evenly;
   }
-
   nav .menu li {
       width: auto;
       margin-bottom: 0;
@@ -146,7 +190,6 @@ nav {
       width: auto;
       box-sizing: border-box;
   }
-
   .menu li a:hover {
       border-radius: 5px;
   }
@@ -154,39 +197,30 @@ nav {
   #menu-toggle {
       display: none;
   }
-
-  .menu li {
-      width: auto;
+  /* Main Content Styles (Desktop) */
+   .main-content {
+      display: flex !important;
+      flex-direction: row !important;
+      justify-content: space-around !important; /* Changed to space-around */
+      align-items: center !important; /* Keep vertical centering */
+      width: 80% !important; /* Adjust width of the container if needed */
+      margin: 0 auto; /* Center the main content horizontally */
   }
-
-  .menu li a {
-      width: auto;
+  .logo-section {
+      max-width: 400px !important;
+      width: auto !important; /* Adjust width as needed */
+      margin-right: 0 !important; /* Remove auto margin */
+      order: 0 !important;
+      text-align: center; /* Center content within the logo section */
   }
-
-  nav {
-      padding: 10px 0;
-      position: static;
-      margin-top: 10px;
+   .login-section {
+      max-width: 400px !important;
+      width: auto !important; /* Adjust width as needed */
+      margin-left: 0 !important; /* Remove left margin reset */
+      order: 1 !important;
+      text-align: center; /* Center content within the login section */
   }
-
-  #menu-toggle {
-      position: fixed;
-  }
-
-  .header {
-      padding-bottom: 0;
-  }
- /* Limit About Image Size on Desktop */
-  .about-page .about-image {
-      max-width: 300px; /*  Fixed width on DESKTOP  */
-      /* OR, use a percentage of viewport width: */
-      /* max-width: 30vw;  */
-  }
-.about-page .dog-image{
-  max-width: 300px;
 }
-}
-
 /* --- Contact Page Specific Styles --- */
 .contact-content {
   padding: 20px;
@@ -221,7 +255,10 @@ body.dark-mode #menu-toggle.open span {
 }
 
 body.dark-mode #color-mode-switch svg {
-  fill: #000;
+  fill: #fff;
+}
+body.dark-mode .header-text{
+  color: #fff;
 }
 
 /* Style the dark mode switch */
@@ -240,6 +277,10 @@ body.dark-mode #color-mode-switch svg {
 
 footer {
   background-color: #333;
+  margin-top: auto;
+  text-align: center;
+  padding: 10px;
+  color: white;
 }
 
 body.dark-mode footer {
@@ -247,48 +288,58 @@ body.dark-mode footer {
 }
 
 main {
-  flex-grow: 1;
-  overflow-x: hidden; /* Prevent horizontal scroll within main */
+  display: flex; /* Make main a flex container */
+  justify-content: center; /* Center content horizontally */
+  align-items: center; /* Center content vertically */
+  flex-grow: 1; /* Allow it to grow to fill available space */
+  overflow-x: hidden;
 }
+/* --- New Main Content Container --- */
+.main-content {
+  display: flex;
+  flex-direction: column; /* Stack vertically on mobile */
+  align-items: center;     /* Center horizontally on mobile */
+}
+
 /* --- About Page Styles --- */
-.about-page .about-content { /* Scoped to .about-page */
+.about-page .about-content {
   padding: 20px;
   text-align: center;
 }
-.about-page .about-content h1{
-text-align: center;
+
+.about-page .about-content h1 {
+  text-align: center;
 }
 
-.about-page .about-image { /* Scoped to .about-page */
-max-width: 80%;       /* Default: 80% of the container on MOBILE */
+.about-page .about-image {
+  max-width: 80%; /* Adjust as needed */
   height: auto;
   display: block;
   margin: 20px auto;
   border-radius: 10px;
 }
 
-.about-page #dog-container { /* Scoped to .about-page */
+.about-page #dog-container {
   margin-top: 20px;
   text-align: center;
 }
 
-.about-page .dog-image { /* Scoped to .about-page */
-max-width: 80%;       /* Default: 80% of the container on MOBILE */
+.about-page .dog-image {
+  max-width: 80%; /* Adjust as needed */
   height: auto;
   margin-top: 0.5rem;
   display: none;
   border-radius: 10px;
 }
-/*dark mode for about*/
-body.dark-mode .about-page .about-content{
-background-color: #1e1e1e;
+
+body.dark-mode .about-page .about-content {
+  background-color: #1e1e1e;
 }
+
 /* --- Login Form Styles --- */
+
 .login-section {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  /* Removed min-height:  We're using flex-grow on main now */
+  width: 100%;
 }
 
 .login-form {
@@ -296,9 +347,9 @@ background-color: #1e1e1e;
   padding: 20px;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  width: 100%; /* Take full width on mobile */
-  max-width: 400px; /* Limit width on larger screens */
-  box-sizing: border-box; /* Include padding in width */
+  width: 100%;
+  max-width: 400px;
+  box-sizing: border-box;
 }
 
 .login-form h2 {
@@ -318,7 +369,7 @@ background-color: #1e1e1e;
   margin-bottom: 15px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  box-sizing: border-box; /* Include padding and border in width */
+  box-sizing: border-box;
 }
 
 .login-form button[type="submit"] {
@@ -351,30 +402,35 @@ background-color: #1e1e1e;
 }
 
 /* Dark Mode Styles for the Form */
-body.dark-mode .login-form{
+body.dark-mode .login-form {
   background-color: #383838;
-  box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1); /*White shadow*/
+  box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1); /* White shadow */
 }
+
 body.dark-mode .login-form input[type="text"],
-body.dark-mode .login-form input[type="password"]{
+body.dark-mode .login-form input[type="password"] {
   background-color: #1e1e1e;
   color: #fff;
   border: 1px solid #555;
 }
-body.dark-mode .login-form button[type="submit"]{
-background-color: #0056b3;
+
+body.dark-mode .login-form button[type="submit"] {
+  background-color: #0056b3;
 }
-body.dark-mode .register-link a{
-color: #66b3ff;
+
+body.dark-mode .register-link a {
+  color: #66b3ff;
 }
+
 .error-message {
   color: red;
   margin-top: 10px;
   text-align: center; /* Center the error message */
 }
+
 /*Dark mode for error*/
-body.dark-mode .error-message{
-color: #f00;
+body.dark-mode .error-message {
+  color: #f00;
 }
 
 /* --- Trophy Styles --- */
@@ -395,8 +451,9 @@ color: #f00;
   margin: 0 10px;
   transition: transform 0.3s ease; /* Add transition here */
 }
+
 /* Hover effect - now includes animation */
-.trophy:hover i{
+.trophy:hover i {
   animation: spin 0.5s linear;
   transform-origin: center;
 }
@@ -409,9 +466,17 @@ color: #f00;
 }
 
 /* Specific trophy colors */
-#gold-trophy i { color: #ffd700; }
-#silver-trophy i { color: #c0c0c0; }
-#bronze-trophy i { color: #cd7f32; }
+#gold-trophy i {
+  color: #ffd700;
+}
+
+#silver-trophy i {
+  color: #c0c0c0;
+}
+
+#bronze-trophy i {
+  color: #cd7f32;
+}
 
 .trophy span {
   display: block;
@@ -420,8 +485,13 @@ color: #f00;
 
 /* --- Keyframes for the Spin Animation --- */
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+      transform: rotate(0deg);
+  }
+
+  100% {
+      transform: rotate(360deg);
+  }
 }
 
 /* Dark Mode for Trophies */
@@ -433,9 +503,16 @@ body.dark-mode .trophy-section {
 body.dark-mode .trophy span {
   color: #fff;
 }
+
 /* --- Only apply hover styles on devices that support hover --- */
 @media (hover: hover) {
   .trophy:hover i {
       animation: spin 0.5s linear;
   }
+}
+
+/* --- Calendar Page Specific Main Style --- */
+body.calendar-page main {
+  flex-direction: column; /* Stack the children vertically */
+  align-items: stretch;   /* Make children take full width */
 }
