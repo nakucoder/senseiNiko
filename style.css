@@ -610,3 +610,62 @@ body.calendar-page main {
   flex-direction: column; /* Stack the children vertically */
   align-items: stretch;   /* Make children take full width */
 }
+
+
+
+/*EMPTY CIRCLES ?*/
+/* --- Styles for the smaller circles in about.html --- */
+/* --- Styles for the smaller circles in about.html --- */
+/* --- Styles for the smaller circles in about.html --- */
+.smaller-circles-container {
+display: flex; /* Arrange circles horizontally */
+justify-content: space-around; /* Distribute space around the circles */
+align-items: center; /* Center the circles vertically */
+margin-top: 20px; /* Add some space above the circles */
+gap: 20px; /* Increased space between the circles */
+width: 90%; /* Increased width of the container to allow more space */
+max-width: 700px; /* Limit the maximum width of the container */
+margin-left: auto;
+margin-right: auto;
+flex-wrap: wrap; /* Allow circles to wrap to the next line on smaller screens */
+}
+
+.smaller-circle {
+width: 90px; /* Increased size of the circles */
+height: 90px; /* Increased size of the circles */
+border-radius: 50%; /* Make them circular */
+background-color: #ddd; /* Placeholder background color */
+flex-shrink: 0; /* Prevent circles from shrinking too much */
+max-width: 100%; /* Make each circle responsive within its container (flex item) */
+box-sizing: border-box; /* Ensure padding and border are included in the element's total width and height */
+margin-bottom: 10px; /* Add some margin below each circle if they wrap */
+}
+
+.team-member {
+display: flex;
+flex-direction: column;
+align-items: center;
+margin-bottom: 15px; /* Add some margin below each team member block */
+}
+
+.team-member p {
+margin-top: 5px; /* Space between the circle and the name */
+text-align: center; /* Center the names under the circles */
+}
+
+/* Dark mode styles for the smaller circles */
+body.dark-mode .smaller-circle {
+background-color: #333; /* Dark background for dark mode */
+}
+
+/* Mobile responsiveness adjustments */
+@media (max-width: 600px) {
+.smaller-circles-container {
+    justify-content: space-around; /* Keep space-around on mobile too, might adjust later */
+}
+
+.smaller-circle {
+    width: 70px; /* Slightly smaller circles on mobile */
+    height: 70px;
+}
+}
