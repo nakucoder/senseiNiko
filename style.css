@@ -775,3 +775,65 @@ text-decoration: underline;
     padding: 10px 15px;
 }
 }
+
+/* --- Quotes Section Styles --- */
+.quotes-section {
+  padding: 20px;
+  background-color: #f8f8f8; /* Optional: Background color for the section */
+  border-bottom: 1px solid #eee; /* Optional: Separator */
+}
+
+.quotes-container {
+  display: flex;
+  flex-direction: row; /* Display quotes in a single line on desktop */
+  justify-content: center; /* Center the quotes horizontally */
+  align-items: center; /* Center quotes vertically in the row */
+  gap: 15px; /* Space between quotes */
+  padding: 15px;
+  width: 90%;
+  max-width: 1200px; /* Adjust as needed for your desired desktop width */
+  margin: 0 auto; /* Center the container */
+  flex-wrap: wrap; /* Allow quotes to wrap to multiple lines on smaller screens */
+}
+
+.quote {
+  text-align: center;
+  font-style: italic;
+  color: #555; /* Adjust color as needed */
+  padding: 10px;
+  border: 1px solid #ddd; /* Optional: Border around each quote */
+  border-radius: 5px; /* Optional: Rounded corners for quotes */
+  background-color: white; /* Optional: Background for each quote */
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.05); /* Optional: Subtle shadow */
+  margin-bottom: 10px; /* Add some bottom margin for spacing when wrapped */
+}
+
+/* Mobile layout (adjust if needed) */
+@media (max-width: 767px) {
+  .quotes-container {
+      justify-content: center; /* You can change this to flex-start or space-around if you prefer */
+      /* flex-direction: row; remains to allow wrapping */
+  }
+  .quote {
+      width: 100%; /* Make quotes take full width on mobile */
+  }
+}
+
+/* Desktop layout (remove the multi-row specific styles) */
+@media (min-width: 768px) {
+  .quotes-container {
+      /* flex-direction: row; already set above */
+      justify-content: center; /* Keep centering on desktop */
+      align-items: center;
+  }
+  .quote {
+      width: auto; /* Adjust width based on content on desktop */
+  }
+}
+
+/* Larger screens adjustment (optional) */
+@media (min-width: 1200px) {
+  .quotes-container {
+      justify-content: center; /* Maintain center alignment */
+  }
+}
