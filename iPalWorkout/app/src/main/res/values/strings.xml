@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">ProjectTest1</string>
+    <string name="btn_exit">Exit</string>
+    <string name="btn_sign_up">Register</string>
+    <string name="btn_sign_in">Login</string>
+    <string name="btn_home">Home</string>
+    <string name="btn_back">Back</string>
+    <string name="yoga_button">Yoga</string>
+    <string name="cali_button">Calisthenics</string>
+    <string name="cardio_button">Cardio</string>
+    <string name="zumba_button">Zumba</string>
+</resources>
