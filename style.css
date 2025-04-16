@@ -408,18 +408,6 @@ main {
   border-radius: 10px;
 }
 
-.about-page #dog-container {
-  margin-top: 20px;
-  text-align: center;
-}
-
-.about-page .dog-image {
-  max-width: 80%; /* Adjust as needed */
-  height: auto;
-  margin-top: 0.5rem;
-  display: none;
-  border-radius: 10px;
-}
 
 body.dark-mode .about-page .about-content {
   background-color: #1e1e1e;
@@ -1111,4 +1099,21 @@ body.login-page #registration-form #homepage-videos {
       padding: 0 15px;
       margin: 20px auto;
   }
+}
+/* --- CSS for Mouse Following Effect (Revised) --- */
+.sticky-logo-wrapper.js-mouse-follow-active {
+  position: fixed;
+  /* left: 20px; */ /* <<< REMOVE or COMMENT OUT this line */
+  top: 0;      
+  /* width: 150px; */ /* Set width if needed */
+  /* height: 150px; */ /* Set height if needed */
+  z-index: 10; 
+  transform: translateY(0px); 
+  will-change: transform; 
+  /* border: 2px solid purple; */ /* Optional for testing */
+}
+
+/* Ensure original wrapper doesn't have conflicting transform */
+.sticky-logo-wrapper {
+    transform: none; 
 }

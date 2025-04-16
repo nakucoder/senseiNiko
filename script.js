@@ -29,25 +29,6 @@ colorModeSwitch.addEventListener('click', () => {
         localStorage.setItem('colorMode', 'dark-mode'); // Save preference
     }
 });
-
-// Dog Fetching Code (for about.html)
-document.addEventListener('DOMContentLoaded', () => {
-    const fetchDogButton = document.getElementById('fetch-dog');
-    const dogImage = document.getElementById('dog-image');
-
-    if (fetchDogButton && dogImage) {
-        fetchDogButton.addEventListener('click', function() {
-            fetch('https://dog.ceo/api/breeds/image/random')
-                .then(response => response.json())
-                .then(data => {
-                    dogImage.src = data.message;
-                    dogImage.style.display = 'block';
-                })
-                .catch(error => console.error('Error fetching dog image:', error));
-        });
-    }
-});
-
 // --- Mock Login Form Handling ---
 document.addEventListener('DOMContentLoaded', () => {
     const loginForm = document.getElementById('login-form');
@@ -162,3 +143,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Change quote on back/forward navigation
     window.addEventListener('popstate', updateQuote);
 });
+
+
+
