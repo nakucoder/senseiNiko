@@ -11,7 +11,7 @@
         <a href="index.html" class="logo-link">
             <img src="ipalRobot_image.jpg" alt="iPal Robot Trainer Logo" class="header-logo">
         </a>
-        <h1 class="header-text"><i class="fas fa-bolt"></i> iPal ROBOT TRAINER <i class="fas fa-bolt"></i></h1>
+        <h1 class="header-text"><i class="fas fa-bolt"></i> RoboFit ROBOT TRAINER <i class="fas fa-bolt"></i></h1>
         <nav>
             <button id="menu-toggle" aria-label="Open navigation">
                 <span></span>
@@ -25,6 +25,35 @@
             </ul>
         </nav>
     </header>
+
+    <section class="intro-section">
+
+        <h2>Train Smarter. Track Stronger. Achieve More with RoboFit.</h2>
+        <p>
+            Welcome to the future of personalized fitness! RoboFit combines a dedicated robot coach
+            with seamless online progress tracking. Here’s how you’ll transform your routine:
+        </p>
+    
+        <ul>
+            <li class="icon-robot">
+                <i class="fas fa-robot"></i>Interactive Guidance: Follow RoboFit’s visual demos for Yoga, Calisthenics & Cardio.
+            </li>
+            <li class="icon-sync">
+                <i class="fas fa-sync-alt"></i>Synced Progress: Your completed workouts automatically appear on your web dashboard.
+            </li>
+            <li class="icon-calendar">
+                <i class="fas fa-calendar-alt"></i>Visualize Your Journey: See your activity history and consistency on your personal calendar.
+            </li>
+            <li class="icon-trophy">
+                <i class="fas fa-trophy"></i>Earn Trophies: Stay motivated by earning Trophies!
+            </li>
+            <li class="icon-cogs">
+                <i class="fas fa-cogs"></i>Your Fitness Command Center: Login via our Website or with the RoboFit console.
+            </li>
+        </ul>
+    
+    </section>
+    
 
     <main>
         <div class="main-content">
@@ -90,17 +119,27 @@
                 </div>
             </div>
 
-            <div id="homepage-videos"> <div class="video-box">
+            <div id="homepage-videos">
+                 <div class="video-box">
+                    <p class="video-caption">
+                        Master Yoga poses with RoboFit's visual guidance. Stay motivated as every completed session is saved to your profile!
+                    </p>
                     <video controls playsinline>
                         <source src="awyZvpQ_460svvp9.webm" type="video/webm">
                     </video>
                 </div>
                 <div class="video-box">
+                    <p class="video-caption">
+                        Get your heart pumping and crush your goals! RoboFit tracks every Cardio session, syncs your results, and keeps you motivated by showing your progress.
+                    </p>
                     <video controls playsinline>
                         <source src="aZDeQvn_460svvp9.webm" type="video/webm">
                     </video>
                 </div>
                 <div class="video-box">
+                    <p class="video-caption">
+                        Build strength move by move! RoboFit guides your form as you master bodyweight training, and motivates you with trophies.
+                    </p>
                     <video controls playsinline>
                         <source src="armzygB_460svvp9.webm" type="video/webm">
                     </video>
@@ -124,93 +163,226 @@
     </footer>
 
     <script src="script.js"></script> <script>
-        // --- Get references to elements ONCE ---
-        const loginSection = document.querySelector('.login-section'); // Use querySelector for clarity
-        const registrationFormDiv = document.getElementById('registration-form'); // The container div
-        const homepageVideos = document.getElementById('homepage-videos'); // Get the video container
-        const logoWrapper = document.querySelector('.sticky-logo-wrapper'); // Get logo wrapper
-        const registerLink = document.getElementById('register-link');
-        const loginLink = document.getElementById('login-link');
-        const registerFormSubmit = document.getElementById('register-form'); // The actual form element inside the div
+       // --- Get references to elements ONCE ---
+const loginSection = document.querySelector('.login-section');
+const registrationFormDiv = document.getElementById('registration-form');
+const homepageVideos = document.getElementById('homepage-videos');
+const logoWrapper = document.querySelector('.sticky-logo-wrapper'); // Keep if used elsewhere, otherwise optional here
+const registerLink = document.getElementById('register-link');
+const loginLink = document.getElementById('login-link');
+const registerFormSubmit = document.getElementById('register-form'); // The actual form element
+const loginFormSubmit = document.getElementById('login-form'); // The login form element
+const introSection = document.querySelector('.intro-section'); // Get the intro section
 
-        // --- Check if elements exist before adding listeners ---
-        if (registerLink && loginSection && registrationFormDiv && homepageVideos) {
-            // --- Register Link Click ---
-            registerLink.addEventListener('click', function(event) {
-                event.preventDefault();
-                loginSection.style.display = 'none';
-                registrationFormDiv.style.display = 'block';
-                homepageVideos.style.display = 'none'; // Hide videos
-            });
+// --- Elements for Feedback Messages (Ensure these IDs exist in your HTML) ---
+const registerSuccessMsg = document.getElementById('register-success-message');
+const registerErrorMsg = document.getElementById('register-error-message');
+const loginErrorMsgElem = document.getElementById('login-error-message');
+
+// --- View Switching Logic ---
+// Check if ALL necessary elements exist before adding listeners
+if (registerLink && loginLink && loginSection && registrationFormDiv && homepageVideos && introSection) {
+
+    // --- Register Link Click (Show Registration) ---
+    registerLink.addEventListener('click', function(event) {
+        event.preventDefault();
+        introSection.style.display = 'none'; // <<< HIDE Intro Section
+        loginSection.style.display = 'none';
+        registrationFormDiv.style.display = 'block';
+        if(homepageVideos) homepageVideos.style.display = 'none'; // Hide videos (check if exists first)
+
+        // Clear any previous messages
+        if(registerSuccessMsg) registerSuccessMsg.style.display = 'none';
+        if(registerErrorMsg) registerErrorMsg.style.display = 'none';
+        if (loginErrorMsgElem) loginErrorMsgElem.textContent = '';
+    });
+
+    // --- Login Link Click (Show Login) ---
+    loginLink.addEventListener('click', function(event) {
+        event.preventDefault();
+        introSection.style.display = 'none'; // <<< KEEP Intro Section hidden (or set to 'block'/'flex' etc. if you want it back)
+        registrationFormDiv.style.display = 'none';
+        loginSection.style.display = 'flex'; // Assuming flex is the correct display type for login section
+        if(homepageVideos) homepageVideos.style.display = 'block'; // Show videos (check if exists first)
+
+        // Clear any previous messages
+        if(registerSuccessMsg) registerSuccessMsg.style.display = 'none';
+        if(registerErrorMsg) registerErrorMsg.style.display = 'none';
+        if (loginErrorMsgElem) loginErrorMsgElem.textContent = '';
+    });
+
+} else {
+    console.warn("One or more elements needed for view switching not found.");
+}
+
+
+// --- Registration Form Submission ---
+if (registerFormSubmit) {
+    registerFormSubmit.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        // Clear previous messages
+        if(registerSuccessMsg) registerSuccessMsg.style.display = 'none';
+        if(registerErrorMsg) registerErrorMsg.style.display = 'none';
+
+        // --- Form data collection ---
+        const email = document.getElementById('reg-email').value.trim();
+        const username = document.getElementById('reg-username').value.trim();
+        const password = document.getElementById('reg-password').value;
+        const firstName = document.getElementById('reg-first-name').value.trim();
+        const lastName = document.getElementById('reg-last-name').value.trim();
+        const gender = document.getElementById('reg-gender').value;
+        const currWeight = parseFloat(document.getElementById('reg-curr-weight').value);
+        const heightInches = parseInt(document.getElementById('reg-height-inches').value);
+        const goalWeight = parseFloat(document.getElementById('reg-goal-weight').value);
+        const dateOfBirth = document.getElementById('reg-dob').value;
+        // --- End form data collection ---
+
+        // Basic validation example
+        if (!email || !username || !password || !firstName || !lastName || !gender || isNaN(currWeight) || isNaN(heightInches) || isNaN(goalWeight) || !dateOfBirth) {
+             if(registerErrorMsg) {
+                registerErrorMsg.textContent = 'Please fill in all required fields.';
+                registerErrorMsg.style.display = 'block';
+            } else { console.error("Register error message element not found."); }
+            return; // Stop submission
         }
 
-        if (loginLink && loginSection && registrationFormDiv && homepageVideos) {
-            // --- Login Link Click ---
-            loginLink.addEventListener('click', function(event) {
-                event.preventDefault();
-                registrationFormDiv.style.display = 'none';
-                loginSection.style.display = 'flex'; // Show login (assuming it should be flex, adjust if needed)
-                homepageVideos.style.display = 'block'; // Show videos (assuming it should be block)
-            });
+        // --- Fetch call for Registration (Using Relative Path) ---
+        fetch('/api/register', { // <<< CORRECTED URL
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                email, username, password,
+                first_name: firstName, last_name: lastName, gender,
+                curr_weight: currWeight, height_inches: heightInches,
+                goal_weight: goalWeight, date_of_birth: dateOfBirth
+            })
+        })
+        .then(response => {
+             if (!response.ok) {
+                return response.json().then(errData => { throw new Error(errData.message || `Registration failed: ${response.statusText}`); });
+             }
+             return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                if(registerSuccessMsg) { // Use text feedback instead of alert
+                    registerSuccessMsg.textContent = 'Registration successful! Redirecting to login...';
+                    registerSuccessMsg.style.display = 'block';
+                } else { console.log("Registration successful!"); } // Fallback log
+
+                registerFormSubmit.reset(); // Clear form
+
+                // Switch back to login view after delay
+                setTimeout(() => {
+                    if(registrationFormDiv) registrationFormDiv.style.display = 'none';
+                    if(loginSection) loginSection.style.display = 'flex';
+                    if(homepageVideos) homepageVideos.style.display = 'block';
+                    if(registerSuccessMsg) registerSuccessMsg.style.display = 'none'; // Hide message after switching
+                    if(introSection) introSection.style.display = 'none'; // Keep intro hidden
+                }, 2000);
+
+            } else {
+                 if(registerErrorMsg) { // Use text feedback instead of alert
+                    registerErrorMsg.textContent = 'Registration failed: ' + (data.message || 'Unknown error');
+                    registerErrorMsg.style.display = 'block';
+                } else { console.error('Registration failed:', data.message || 'Unknown error'); }
+            }
+        })
+        .catch(error => {
+            console.error('Registration Fetch Error:', error);
+            if(registerErrorMsg) {
+                registerErrorMsg.textContent = error.message || 'An error occurred. Please try again.';
+                registerErrorMsg.style.display = 'block';
+            } else { console.error('An error occurred during registration.'); }
+        });
+    });
+} else {
+     console.warn("Registration form element not found.");
+}
+
+// --- ADDED: Login Form Submission ---
+if (loginFormSubmit) {
+    loginFormSubmit.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const usernameInput = document.getElementById('username');
+        const passwordInput = document.getElementById('password');
+        // loginErrorMsgElem defined above
+
+        // Clear previous error message
+        if (loginErrorMsgElem) loginErrorMsgElem.textContent = '';
+
+        // Check if inputs exist before getting value
+        if (!usernameInput || !passwordInput) {
+             console.error("Username or password input element not found.");
+             if (loginErrorMsgElem) loginErrorMsgElem.textContent = 'Login form error. Please refresh.';
+             return;
         }
 
-        if (registerFormSubmit) {
-            // --- Register Form Submission ---
-            // Note: This event listener is on the FORM element, not the container div
-            registerFormSubmit.addEventListener('submit', function(event) {
-                event.preventDefault();
+        const username = usernameInput.value.trim();
+        const password = passwordInput.value;
 
-                // --- Form data collection (existing code) ---
-                const email = document.getElementById('reg-email').value;
-                const username = document.getElementById('reg-username').value;
-                const password = document.getElementById('reg-password').value;
-                const firstName = document.getElementById('reg-first-name').value;
-                const lastName = document.getElementById('reg-last-name').value;
-                const gender = document.getElementById('reg-gender').value;
-                const currWeight = parseFloat(document.getElementById('reg-curr-weight').value);
-                const heightInches = parseInt(document.getElementById('reg-height-inches').value);
-                const goalWeight = parseFloat(document.getElementById('reg-goal-weight').value);
-                const dateOfBirth = document.getElementById('reg-dob').value;
-                // --- End form data collection ---
-
-                // --- Fetch call (existing code) ---
-                fetch('http://localhost:3000/api/register', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        email, username, password,
-                        first_name: firstName, last_name: lastName, gender,
-                        curr_weight: currWeight, height_inches: heightInches,
-                        goal_weight: goalWeight, date_of_birth: dateOfBirth
-                    })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        alert('Registration successful!');
-                        // Switch back to login view
-                        registrationFormDiv.style.display = 'none';
-                        loginSection.style.display = 'flex'; // Show login again
-                        homepageVideos.style.display = 'block'; // Show videos again
-
-                    } else {
-                        alert('Registration failed: ' + data.message);
-                    }
-                })
-                .catch(error => console.error('Error:', error));
-                // --- End fetch call ---
-            });
+        // Basic validation
+         if (!username || !password) {
+            if (loginErrorMsgElem) loginErrorMsgElem.textContent = 'Please enter both username and password.';
+            return; // Stop submission
         }
 
-        // Initial setup: Ensure videos are visible if login form is initially shown
-        // (This depends on your default state, but assuming login is default)
-        if (loginSection && homepageVideos && window.getComputedStyle(loginSection).display !== 'none') {
-            homepageVideos.style.display = 'block';
-        } else if (homepageVideos) {
-            // If login is hidden initially, ensure videos are also hidden
-             homepageVideos.style.display = 'none';
-        }
+        // --- Fetch call for Signin (Using Relative Path) ---
+        fetch('/api/signin', { // <<< CORRECTED URL
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username, password })
+        })
+        .then(response => {
+             if (!response.ok) {
+                return response.json().then(errData => { throw new Error(errData.message || `Login failed: ${response.statusText}`); });
+             }
+             return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                // Successful login - redirect
+                window.location.href = 'calendar.html';
+            } else {
+                 // Handle backend indicating failure (e.g. Invalid credentials)
+                 if (loginErrorMsgElem) {
+                    loginErrorMsgElem.textContent = data.message || 'Invalid credentials.';
+                } else { console.error("Login failed:", data.message || 'Invalid credentials.'); }
+            }
+        })
+        .catch(error => {
+            console.error('Login Fetch Error:', error);
+            if (loginErrorMsgElem) {
+                loginErrorMsgElem.textContent = error.message || 'An error occurred. Please try again.';
+            } else { console.error('An error occurred during login.'); }
+        });
+    });
+} else {
+    console.warn("Login form element not found.");
+}
 
+
+// --- Initial setup: Ensure videos are visible if login form is initially shown ---
+// This depends on your default HTML state (which form is shown initially?)
+// Assuming login form is shown by default:
+if (loginSection && window.getComputedStyle(loginSection).display !== 'none') {
+    if(homepageVideos) homepageVideos.style.display = 'block';
+    // Ensure intro is visible if login is default view
+    // if(introSection) introSection.style.display = 'block'; // Or 'flex', etc. - uncomment if needed
+} else if (registrationFormDiv && window.getComputedStyle(registrationFormDiv).display !== 'none') {
+    // If registration form is shown by default instead
+    if(homepageVideos) homepageVideos.style.display = 'none';
+    if(introSection) introSection.style.display = 'none'; // Intro should be hidden if starting on registration
+} else {
+    // Fallback if neither is explicitly shown (e.g., hide videos)
+     if(homepageVideos) homepageVideos.style.display = 'none';
+     // Decide initial state for intro section if neither form is visible
+     // if(introSection) introSection.style.display = 'block';
+}
     </script>
 
 <!-- NEW: ADDED MOUSE-FOLLOW SCRIPT (NON-INTRUSIVE) -->
