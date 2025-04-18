@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="24dp"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:background="#ffffff">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="start">
+
+            <Button
+                android:id="@+id/btn_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="@string/btn_back"
+                android:textSize="30sp"
+                android:textColor="#FFFFFF"
+                android:background="#FF8A80" />
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Choose Your Workout"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_below="@id/btn_back"
+            android:layout_marginBottom="24dp" />
+
+        <Button
+            android:id="@+id/yoga_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Yoga"
+            android:textSize="20sp"
+            android:layout_marginBottom="16dp" />
+
+        <Button
+            android:id="@+id/cali_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Calisthenics"
+            android:textSize="20sp"
+            android:layout_marginBottom="16dp" />
+
+        <Button
+            android:id="@+id/cardio_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cardio"
+            android:textSize="20sp"
+            android:layout_marginBottom="16dp" />
+
+        <Button
+            android:id="@+id/zumba_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Zumba"
+            android:textSize="20sp"
+            android:layout_marginBottom="32dp" />
+
+    </LinearLayout>
+</ScrollView>
