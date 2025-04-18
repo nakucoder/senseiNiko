@@ -164,6 +164,7 @@
 
     <script src="script.js"></script> <script>
        // --- Get references to elements ONCE ---
+// --- Get references to elements ONCE ---
 const loginSection = document.querySelector('.login-section');
 const registrationFormDiv = document.getElementById('registration-form');
 const homepageVideos = document.getElementById('homepage-videos');
@@ -181,7 +182,7 @@ const loginErrorMsgElem = document.getElementById('login-error-message');
 
 // --- View Switching Logic ---
 // Check if ALL necessary elements exist before adding listeners
-if (registerLink && loginLink && loginSection && registrationFormDiv && homepageVideos && introSection) {
+if (registerLink && loginLink && loginSection && registrationFormDiv && introSection) { // Removed homepageVideos check as it might not always be present/needed for switching
 
     // --- Register Link Click (Show Registration) ---
     registerLink.addEventListener('click', function(event) {
@@ -212,7 +213,7 @@ if (registerLink && loginLink && loginSection && registrationFormDiv && homepage
     });
 
 } else {
-    console.warn("One or more elements needed for view switching not found.");
+    console.warn("One or more elements needed for view switching not found (Login/Register links, forms, intro section).");
 }
 
 
@@ -247,8 +248,8 @@ if (registerFormSubmit) {
             return; // Stop submission
         }
 
-        // --- Fetch call for Registration (Using Relative Path) ---
-        fetch('/api/register', { // <<< CORRECTED URL
+        // --- Fetch call for Registration (Using ABSOLUTE Path) ---
+        fetch('http://18.212.50.45:3000/api/register', { // <<< CORRECTED URL
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -260,7 +261,13 @@ if (registerFormSubmit) {
         })
         .then(response => {
              if (!response.ok) {
-                return response.json().then(errData => { throw new Error(errData.message || `Registration failed: ${response.statusText}`); });
+                // Try to get error message from backend response body
+                return response.json().then(errData => {
+                    throw new Error(errData.message || `Registration failed: ${response.statusText || response.status}`);
+                }).catch(() => {
+                    // Fallback if response not JSON or .json() fails
+                    throw new Error(`Registration failed: ${response.statusText || response.status}`);
+                });
              }
              return response.json();
         })
@@ -269,6 +276,7 @@ if (registerFormSubmit) {
                 if(registerSuccessMsg) { // Use text feedback instead of alert
                     registerSuccessMsg.textContent = 'Registration successful! Redirecting to login...';
                     registerSuccessMsg.style.display = 'block';
+                    if(registerErrorMsg) registerErrorMsg.style.display = 'none'; // Hide error msg on success
                 } else { console.log("Registration successful!"); } // Fallback log
 
                 registerFormSubmit.reset(); // Clear form
@@ -286,14 +294,16 @@ if (registerFormSubmit) {
                  if(registerErrorMsg) { // Use text feedback instead of alert
                     registerErrorMsg.textContent = 'Registration failed: ' + (data.message || 'Unknown error');
                     registerErrorMsg.style.display = 'block';
+                    if(registerSuccessMsg) registerSuccessMsg.style.display = 'none'; // Hide success msg on error
                 } else { console.error('Registration failed:', data.message || 'Unknown error'); }
             }
         })
         .catch(error => {
             console.error('Registration Fetch Error:', error);
             if(registerErrorMsg) {
-                registerErrorMsg.textContent = error.message || 'An error occurred. Please try again.';
+                registerErrorMsg.textContent = error.message || 'An error occurred during registration. Check connection or server logs.';
                 registerErrorMsg.style.display = 'block';
+                 if(registerSuccessMsg) registerSuccessMsg.style.display = 'none';
             } else { console.error('An error occurred during registration.'); }
         });
     });
@@ -301,7 +311,7 @@ if (registerFormSubmit) {
      console.warn("Registration form element not found.");
 }
 
-// --- ADDED: Login Form Submission ---
+// --- Login Form Submission ---
 if (loginFormSubmit) {
     loginFormSubmit.addEventListener('submit', function (e) {
         e.preventDefault();
@@ -329,8 +339,8 @@ if (loginFormSubmit) {
             return; // Stop submission
         }
 
-        // --- Fetch call for Signin (Using Relative Path) ---
-        fetch('/api/signin', { // <<< CORRECTED URL
+        // --- Fetch call for Signin (Using ABSOLUTE Path) ---
+        fetch('http://18.212.50.45:3000/api/signin', { // <<< CORRECTED URL
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -339,7 +349,13 @@ if (loginFormSubmit) {
         })
         .then(response => {
              if (!response.ok) {
-                return response.json().then(errData => { throw new Error(errData.message || `Login failed: ${response.statusText}`); });
+                 // Try to get error message from backend response body
+                return response.json().then(errData => {
+                    throw new Error(errData.message || `Login failed: ${response.statusText || response.status}`);
+                }).catch(() => {
+                     // Fallback if response not JSON or .json() fails
+                    throw new Error(`Login failed: ${response.statusText || response.status}`);
+                });
              }
              return response.json();
         })
@@ -357,7 +373,7 @@ if (loginFormSubmit) {
         .catch(error => {
             console.error('Login Fetch Error:', error);
             if (loginErrorMsgElem) {
-                loginErrorMsgElem.textContent = error.message || 'An error occurred. Please try again.';
+                loginErrorMsgElem.textContent = error.message || 'An error occurred during login. Check connection or server logs.';
             } else { console.error('An error occurred during login.'); }
         });
     });
