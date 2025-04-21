@@ -87,6 +87,19 @@ const registrationValidationRules = [
   // Password: check min length (add more rules like isStrongPassword() if desired)
   body('password').isLength({ min: 8 }).withMessage('Password must be at least 8 characters long.'),
 
+// --- ADD THIS RULE for Password Confirmation ---
+  body('password_confirmation')
+             .notEmpty().withMessage('Password confirmation is required.') // First check if it's empty
+    .custom((value, { req }) => {
+             if (value !== req.body.password) {
+    // Throw an error if passwords don't match. Express-validator catches this.
+             throw new Error('Passwords do not match');
+  }
+  // Indicates the success of this synchronous custom validator
+             return true;
+}),
+// --- END OF ADDED RULE ---
+
   // First Name: trim whitespace, ensure not empty
   body('first_name').trim().notEmpty().withMessage('First Name is required.'),
 
