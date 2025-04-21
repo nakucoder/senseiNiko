@@ -220,8 +220,18 @@ app.get('/api/users', async (req, res) => {
     }
 });
 
-// Start the server - Listen on 0.0.0.0 to be accessible externally
-app.listen(port, '0.0.0.0', () => { // Explicitly listen on 0.0.0.0
-    console.log(`Server running at http://localhost:${port} and accessible externally`);
-});
 
+
+// Start the server - ONLY if run directly (e.g., using "node server.js" or "npm start")
+// This prevents the server from starting automatically when imported by test files
+if (require.main === module) {
+    // Define port inside this block if not already defined globally in the file
+    const port = process.env.PORT || 3000;
+    app.listen(port, '0.0.0.0', () => {
+        console.log(`Server running at http://localhost:${port} and accessible externally`);
+    });
+}
+
+// Export the app object for testing purposes (and potentially other modules)
+// Export both app and pool
+module.exports = { app, pool };
