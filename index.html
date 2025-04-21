@@ -261,18 +261,28 @@ if (registerFormSubmit) {
                 goal_weight: goalWeight, date_of_birth: dateOfBirth
             })
         })
-        .then(response => {
-             if (!response.ok) {
-                // Try to get error message from backend response body
-                return response.json().then(errData => {
-                    throw new Error(errData.message || `Registration failed: ${response.statusText || response.status}`);
-                }).catch(() => {
-                    // Fallback if response not JSON or .json() fails
-                    throw new Error(`Registration failed: ${response.statusText || response.status}`);
-                });
-             }
-             return response.json();
-        })
+        .then(async response => { // Make the callback async
+         if (!response.ok) {
+            // Default error message uses status text (like "Conflict")
+            let errorMsg = `Registration failed: ${response.statusText || response.status}`;
+            try {
+                // Try to parse the JSON body from the backend error response
+                const errData = await response.json(); // Await parsing
+                // If backend sent a message in JSON ({ success: false, message: '...' }), use it!
+                if (errData && errData.message) {
+                    errorMsg = errData.message;
+                }
+            } catch (jsonError) {
+                // If the backend error response wasn't valid JSON, ignore the error
+                // and stick with the default errorMsg based on status code.
+                console.warn("Could not parse JSON error response from backend.", jsonError);
+            }
+            // Throw an error containing the best message we could get
+            throw new Error(errorMsg);
+         }
+         // If response WAS ok (2xx), parse the JSON body for the next .then()
+         return response.json();
+    })
         .then(data => {
             if (data.success) {
                 if(registerSuccessMsg) { // Use text feedback instead of alert
