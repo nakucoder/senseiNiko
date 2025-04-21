@@ -289,10 +289,17 @@ if (password !== confirmPassword) {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                email, username, password,
-                first_name: firstName, last_name: lastName, gender,
-                curr_weight: currWeight, height_inches: heightInches,
-                goal_weight: goalWeight, date_of_birth: dateOfBirth
+                 email,
+                username,
+                password,
+                password_confirmation: confirmPassword, 
+                first_name: firstName,
+                last_name: lastName,
+                gender,
+                curr_weight: currWeight,
+                height_inches: heightInches,
+                goal_weight: goalWeight,
+                date_of_birth: dateOfBirth
             })
         })
         .then(async response => { // Make the callback async
