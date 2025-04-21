@@ -1,18 +1,22 @@
 // Import necessary modules
 const express = require('express');
-const mysql = require('mysql2'); // Using mysql2
+const mysql = require('mysql2');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const cors = require('cors');
+// --- ADD THIS ---
+const { body, validationResult } = require('express-validator'); // Import validation functions
 
 // Initialize Express app
 const app = express();
-const port = process.env.PORT || 3000; // Use environment variable or default to 3000
+const port = process.env.PORT || 3000;
 const secret = process.env.JWT_SECRET || 'secret'; // Use environment variable for secret
 
 // Middleware
 app.use(cors()); // Enable Cross-Origin Resource Sharing
+// Use express's built-in parser instead of bodyParser if preferred
+// app.use(express.json());
 app.use(bodyParser.json()); // Parse JSON request bodies
 
 // MySQL Connection Pool Configuration
@@ -25,7 +29,7 @@ const pool = mysql.createPool({
     port: process.env.DB_PORT || 3306,
     waitForConnections: true,
     queueLimit: 0
-}).promise(); // Use promise wrapper for async/await support with pool.execute
+}).promise(); // Use promise wrapper for async/await support
 
 // Check DB connection on startup (optional but good practice)
 pool.getConnection()
@@ -70,26 +74,72 @@ pool.query(createTableQuery)
   });
 
 // ========================================================
-// == USER REGISTRATION - REPLACED WITH DUPLICATE CHECK ==
+// == USER REGISTRATION VALIDATION RULES                 ==
 // ========================================================
-app.post('/api/register', async (req, res) => {
-    // Destructure all expected fields from the request body
-    const {
+const registrationValidationRules = [
+  // Email: check if it's an email and normalize it
+  body('email').isEmail().withMessage('Please enter a valid email address.').normalizeEmail(),
+
+  // Username: trim whitespace, ensure not empty, check min length
+  body('username').trim().notEmpty().withMessage('Username is required.')
+                 .isLength({ min: 3 }).withMessage('Username must be at least 3 characters long.'),
+
+  // Password: check min length (add more rules like isStrongPassword() if desired)
+  body('password').isLength({ min: 8 }).withMessage('Password must be at least 8 characters long.'),
+
+  // First Name: trim whitespace, ensure not empty
+  body('first_name').trim().notEmpty().withMessage('First Name is required.'),
+
+  // Last Name: trim whitespace, ensure not empty
+  body('last_name').trim().notEmpty().withMessage('Last Name is required.'),
+
+  // Gender: check if it's one of the allowed values
+  body('gender').isIn(['Male', 'Female', 'Other']).withMessage('Invalid gender selected.'),
+
+  // Weights & Height: check if they are numbers greater than 0
+  body('curr_weight').isFloat({ gt: 0 }).withMessage('Current Weight must be a positive number.'),
+  body('height_inches').isInt({ gt: 0 }).withMessage('Height must be a positive whole number (inches).'),
+  body('goal_weight').isFloat({ gt: 0 }).withMessage('Goal Weight must be a positive number.'),
+
+  // Date of Birth: check if it's a valid date format (YYYY-MM-DD) and convert to Date object
+  body('date_of_birth').isISO8601().withMessage('Invalid Date of Birth format (use YYYY-MM-DD).').toDate()
+    // Optional: Add custom validation, e.g., check if date is not in the future
+    .custom(value => {
+        if (value > new Date()) {
+            throw new Error('Date of Birth cannot be in the future.');
+        }
+        return true; // Indicates validation passed
+    }),
+];
+
+
+// ========================================================
+// == USER REGISTRATION ROUTE with Validation            ==
+// ========================================================
+// Apply validation rules as middleware BEFORE the main route handler
+app.post('/api/register', registrationValidationRules, async (req, res) => {
+
+    // --- STEP 1: Check for validation errors ---
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        // If errors exist, return 400 Bad Request with the errors
+        console.log("Registration validation errors:", errors.array());
+        // Return only the first error message for simplicity to the frontend
+        return res.status(400).json({ success: false, message: errors.array()[0].msg });
+        // Or return all errors: return res.status(400).json({ success: false, errors: errors.array() });
+    }
+
+    // --- Validation passed, proceed with registration logic ---
+    // Destructure validated/sanitized data (comes from express-validator now)
+     const {
         username, password, email,
         first_name, last_name, gender,
-        curr_weight, height_inches, goal_weight, date_of_birth
-    } = req.body;
-
-    // --- Basic Input Validation ---
-    if (!username || !password || !email || !first_name || !last_name || !gender || curr_weight == null || height_inches == null || goal_weight == null || !date_of_birth) {
-        return res.status(400).json({ success: false, message: 'Missing required fields.' });
-    }
-    // Add more specific validation if needed (e.g., email format, password strength)
+        curr_weight, height_inches, goal_weight, date_of_birth // date_of_birth is now a Date object
+    } = req.body; // Note: express-validator modifies req.body with sanitized/converted values
 
     try {
-        // --- STEP 1: Check if username or email already exists ---
+        // --- STEP 2: Check if username or email already exists ---
         const checkUserSql = "SELECT COUNT(*) as count FROM users WHERE username = ? OR email = ?";
-        // Use pool.execute for prepared statements (better security/performance)
         const [results] = await pool.execute(checkUserSql, [username, email]); // Using await with promise pool
 
         if (results && results.length > 0 && results[0].count > 0) {
@@ -103,37 +153,41 @@ app.post('/api/register', async (req, res) => {
                 // Hash the password
                 const hashedPassword = await bcrypt.hash(password, 10);
 
-                // Calculate age (ensure date_of_birth is a valid date string)
+                // Calculate age from the validated Date object
                 let age = null;
                 try {
-                    if (date_of_birth) {
-                       const birthDate = new Date(date_of_birth);
+                    if (date_of_birth instanceof Date && !isNaN(date_of_birth)) { // Check if it's a valid Date object
                        const today = new Date();
-                       age = today.getFullYear() - birthDate.getFullYear();
-                       const m = today.getMonth() - birthDate.getMonth();
-                       if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+                       age = today.getFullYear() - date_of_birth.getFullYear();
+                       const m = today.getMonth() - date_of_birth.getMonth();
+                       if (m < 0 || (m === 0 && today.getDate() < date_of_birth.getDate())) {
                            age--;
                        }
-                       if (isNaN(age) || age < 0) age = null; // Reset if invalid
+                       if (isNaN(age) || age < 0) age = null;
                     }
                 } catch (dateError) {
-                     console.error("Error processing date_of_birth:", dateError);
-                     age = null; // Set age to null if DOB processing fails
+                     console.error("Error processing date_of_birth object:", dateError);
+                     age = null;
                 }
+
+                // Format date back to YYYY-MM-DD for SQL INSERT if needed
+                const dobForSql = date_of_birth instanceof Date && !isNaN(date_of_birth)
+                                  ? date_of_birth.toISOString().split('T')[0]
+                                  : null;
 
                 // Prepare SQL INSERT statement
                 const insertSql = `INSERT INTO users (username, password, email, first_name, last_name, gender, curr_weight, height_inches, goal_weight, date_of_birth, age_in_years)
                                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-                // Ensure params match the order and number of columns
                 const insertParams = [
                     username, hashedPassword, email,
                     first_name, last_name, gender,
                     curr_weight, height_inches, goal_weight,
-                    date_of_birth, age // Pass calculated age (can be null)
+                    dobForSql, // Use formatted date
+                    age
                 ];
 
                 // Execute the INSERT query
-                const [insertResults] = await pool.execute(insertSql, insertParams); // Using await
+                const [insertResults] = await pool.execute(insertSql, insertParams);
 
                 // --- Registration Successful ---
                 console.log(`User '${username}' registered successfully. ID: ${insertResults.insertId}`);
@@ -141,8 +195,6 @@ app.post('/api/register', async (req, res) => {
 
             } catch (error) { // Catch errors during hashing or inserting
                 console.error("Error during user insertion or hashing:", error);
-                // Check specifically for duplicate entry errors that might occur
-                // despite the initial check (e.g., race condition)
                 if (error.code === 'ER_DUP_ENTRY') {
                      return res.status(409).json({ success: false, message: 'Username or Email already exists (concurrent registration).' });
                 }
@@ -154,13 +206,11 @@ app.post('/api/register', async (req, res) => {
         res.status(500).json({ success: false, message: 'Internal server error.' });
     }
 });
-// ========================================================
-// == END OF REPLACED USER REGISTRATION ROUTE           ==
-// ========================================================
 
 
 // User Sign-In (Using pool.execute and async/await)
-app.post('/api/signin', async (req, res) => {
+// Consider adding validation rules for signin too
+app.post('/api/signin', /* Add signin validation rules here if desired */ async (req, res) => {
     const { username, password } = req.body;
 
     if (!username || !password) {
@@ -168,13 +218,12 @@ app.post('/api/signin', async (req, res) => {
     }
 
     try {
-        const sql = 'SELECT * FROM users WHERE username = ?';
-        const [results] = await pool.execute(sql, [username]); // Using await
+        const sql = 'SELECT user_id, username, password, first_name, email FROM users WHERE username = ?'; // Select only needed fields
+        const [results] = await pool.execute(sql, [username]);
 
         if (results.length === 0) {
             console.log(`Signin attempt failed: Username '${username}' not found.`);
-            // Use 401 Unauthorized for failed login attempts
-            return res.status(401).json({ success: false, message: 'Invalid username or password' });
+            return res.status(401).json({ success: false, message: 'Invalid username or password' }); // 401 Unauthorized
         }
 
         const user = results[0];
@@ -182,25 +231,23 @@ app.post('/api/signin', async (req, res) => {
 
         if (isMatch) {
             console.log(`User '${username}' signed in successfully.`);
-            // Create JWT token - include only necessary, non-sensitive info
+            // Create JWT token
             const tokenPayload = { userId: user.user_id, username: user.username };
-            const token = jwt.sign(tokenPayload, secret, { expiresIn: '1h' }); // 1 hour expiration
+            const token = jwt.sign(tokenPayload, secret, { expiresIn: '1h' });
 
-            // Send back success, token, and maybe some non-sensitive user info
+            // Send back success, token, and non-sensitive user info
             res.json({
                 success: true,
                 token,
-                user: { // Only send back needed, non-sensitive info
+                user: {
                     userId: user.user_id,
                     username: user.username,
                     firstName: user.first_name
-                    // DO NOT send back password hash or other sensitive details
                 }
              });
         } else {
             console.log(`Signin attempt failed: Incorrect password for username '${username}'.`);
-            // Use 401 Unauthorized for failed login attempts
-            res.status(401).json({ success: false, message: 'Invalid username or password' });
+            res.status(401).json({ success: false, message: 'Invalid username or password' }); // 401 Unauthorized
         }
     } catch (error) {
         console.error("Database error during signin:", error);
@@ -208,11 +255,11 @@ app.post('/api/signin', async (req, res) => {
     }
 });
 
-// Get All Users (Example - Consider security/privacy implications)
+// Get All Users (Example - Remember to protect this endpoint)
 app.get('/api/users', async (req, res) => {
-    // WARNING: In a real app, protect this endpoint! Only admins should access all users.
+    // WARNING: Protect this appropriately in a real application
     try {
-        const [results] = await pool.query('SELECT user_id, username, email, first_name, last_name FROM users'); // Select only needed fields
+        const [results] = await pool.query('SELECT user_id, username, email, first_name, last_name FROM users'); // Avoid selecting password hash
         res.json(results);
     } catch (error) {
         console.error("Database error getting users:", error);
@@ -221,17 +268,14 @@ app.get('/api/users', async (req, res) => {
 });
 
 
-
-// Start the server - ONLY if run directly (e.g., using "node server.js" or "npm start")
-// This prevents the server from starting automatically when imported by test files
+// Start the server - ONLY if run directly
 if (require.main === module) {
-    // Define port inside this block if not already defined globally in the file
     const port = process.env.PORT || 3000;
     app.listen(port, '0.0.0.0', () => {
         console.log(`Server running at http://localhost:${port} and accessible externally`);
     });
 }
 
-// Export the app object for testing purposes (and potentially other modules)
-// Export both app and pool
+// Export the app object AND pool for testing purposes
 module.exports = { app, pool };
+
