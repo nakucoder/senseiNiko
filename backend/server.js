@@ -109,10 +109,19 @@ const registrationValidationRules = [
   // Gender: check if it's one of the allowed values
   body('gender').isIn(['Male', 'Female', 'Other']).withMessage('Invalid gender selected.'),
 
-  // Weights & Height: check if they are numbers greater than 0
-  body('curr_weight').isFloat({ gt: 0 }).withMessage('Current Weight must be a positive number.'),
-  body('height_inches').isInt({ gt: 0 }).withMessage('Height must be a positive whole number (inches).'),
-  body('goal_weight').isFloat({ gt: 0 }).withMessage('Goal Weight must be a positive number.'),
+  body('curr_weight')
+  .isFloat({ gt: 0, lt: 1000 }) // <<< Add lt: 1000 here
+  .withMessage('Current Weight must be a positive number less than 1000.'), // Update message
+
+  body('height_inches')
+  .isInt({ gt: 0, lt: 120 }) // <<< Add lt: 120 here (for 10ft)
+  .withMessage('Height must be a positive whole number less than 300 inches.'), // Update message
+
+  body('goal_weight')
+  .isFloat({ gt: 0, lt: 1000 }) // <<< Add lt: 1000 here
+  .withMessage('Goal Weight must be a positive number less than 1000.'), // Update message
+
+
 
   // Date of Birth: check if it's a valid date format (YYYY-MM-DD) and convert to Date object
   body('date_of_birth').isISO8601().withMessage('Invalid Date of Birth format (use YYYY-MM-DD).').toDate()
