@@ -5,32 +5,53 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Us</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Add basic styling for the status message (move to style.css if preferred) */
+        #contact-status-message {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        #contact-status-message.success {
+            color: #155724; /* Dark green */
+            background-color: #d4edda; /* Light green */
+            border: 1px solid #c3e6cb;
+        }
+        /* Add error class styling if you add validation later */
+        /* #contact-status-message.error {
+            color: #721c24;
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+        } */
+    </style>
 </head>
 <body>
     <header class="header">
         <a href="index.html" class="logo-link">
             <img src="ipalRobot_image.jpg" alt="iPal Robot Trainer Logo" class="header-logo">
         </a>
+        <h1 class="header-text"><i class="fas fa-bolt"></i> RoboFit ROBOT TRAINER <i class="fas fa-bolt"></i></h1>
         <nav>
-            <button id="menu-toggle" aria-label="Open navigation">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-            <ul class="menu">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
-        </nav>
+             <button id="menu-toggle" aria-label="Open navigation">
+                 <span></span>
+                 <span></span>
+                 <span></span>
+             </button>
+             <ul class="menu">
+                 <li><a href="index.html">Home</a></li>
+                 <li><a href="about.html">About</a></li>
+                 <li><a href="contact.html">Contact</a></li>
+             </ul>
+         </nav>
     </header>
 
     <main>
         <section class="contact-content">
             <h1>Contact Us</h1>
-            <p>We'd love to hear from you!  Please fill out the form below or contact us via email or phone.</p>
+            <p>We'd love to hear from you! Please fill out the form below or contact us via email or phone.</p>
 
-            <form action="submit_contact.php" method="post">
+            <form id="contact-form">
                 <label for="name">Name:</label><br>
                 <input type="text" id="name" name="name" required><br><br>
 
@@ -41,6 +62,9 @@
                 <textarea id="message" name="message" rows="4" required></textarea><br><br>
 
                 <input type="submit" value="Submit">
+
+                 <p id="contact-status-message" style="display: none;"></p>
+
             </form>
 
             <h2>Contact Information</h2>
@@ -52,17 +76,62 @@
 
     <footer>
         <div id="color-mode-switch" aria-hidden="true">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-            </svg>
-            <input type="checkbox" id="switch" aria-label="Toggle Dark Mode">
-            <label class="switch-icon" for="switch">Dark Mode Toggle</label>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-            </svg>
-        </div>
+             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707-.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+             </svg>
+             <input type="checkbox" id="switch" aria-label="Toggle Dark Mode">
+             <label class="switch-icon" for="switch">Dark Mode Toggle</label>
+             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                 <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+             </svg>
+         </div>
     </footer>
 
     <script src="script.js"></script>
-</body>
+
+    <script>
+        // Get references to the form and status message element
+        const contactForm = document.getElementById('contact-form');
+        const statusMessage = document.getElementById('contact-status-message');
+
+        // Check if the form exists on the page
+        if (contactForm) {
+            // Add event listener for the form submission
+            contactForm.addEventListener('submit', function(event) {
+                // Prevent the default form submission (which would go to submit_contact.php and cause 404)
+                event.preventDefault();
+
+                // --- Form submission logic ---
+
+                // Optional: You could add validation here if needed,
+                // but the 'required' attribute handles empty fields.
+
+                // Display a success message
+                if (statusMessage) {
+                    statusMessage.textContent = 'Thank you for your message! We will get back to you shortly.';
+                    statusMessage.className = 'success'; // Add class for styling
+                    statusMessage.style.display = 'block'; // Make it visible
+                } else {
+                    // Fallback if the status element isn't found
+                    alert('Thank you for your message!');
+                }
+
+                // Clear the form fields
+                contactForm.reset();
+
+                // Optional: Hide the message after a few seconds
+                setTimeout(() => {
+                    if (statusMessage) {
+                        statusMessage.style.display = 'none';
+                        statusMessage.textContent = ''; // Clear text
+                        statusMessage.className = ''; // Remove styling class
+                    }
+                }, 5000); // Hide after 5 seconds (5000 milliseconds)
+            });
+        } else {
+            console.warn("Contact form element with id 'contact-form' not found.");
+        }
+    </script>
+    </body>
 </html>
+
