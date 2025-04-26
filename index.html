@@ -341,6 +341,10 @@ if (password !== confirmPassword) {
                     if(homepageVideos) homepageVideos.style.display = 'block';
                     if(registerSuccessMsg) registerSuccessMsg.style.display = 'none'; // Hide message after switching
                     if(introSection) introSection.style.display = 'none'; // Keep intro hidden
+                    // Stop the mouse follow effect when returning to login view
+                    if (typeof stopMouseFollow === 'function') {
+                 stopMouseFollow();
+            }
                 }, 2000);
 
             } else {
