@@ -29,7 +29,7 @@ colorModeSwitch.addEventListener('click', () => {
         localStorage.setItem('colorMode', 'dark-mode'); // Save preference
     }
 });
-// --- Mock Login Form Handling ---
+/* --- Mock Login Form Handling ---
 document.addEventListener('DOMContentLoaded', () => {
     const loginForm = document.getElementById('login-form');
     const loginErrorMessage = document.getElementById('login-error-message');
@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
-});
+}); */
 
 // --- FullCalendar Initialization ---
 document.addEventListener('DOMContentLoaded', function() {
