@@ -341,10 +341,17 @@ if (password !== confirmPassword) {
                     if(homepageVideos) homepageVideos.style.display = 'block';
                     if(registerSuccessMsg) registerSuccessMsg.style.display = 'none'; // Hide message after switching
                     if(introSection) introSection.style.display = 'none'; // Keep intro hidden
-                    // Stop the mouse follow effect when returning to login view
-                    if (typeof stopMouseFollow === 'function') {
-                 stopMouseFollow();
-            }
+                   // showing login, and calling stopMouseFollow correctly.
+                    if (loginLink) {
+                  console.log("Registration successful, simulating click on login link..."); // Optional log
+                  loginLink.click(); // Simulate a click
+            } else {
+                   // Fallback if link isn't found (shouldn't happen)
+                   console.error("Login link not found to simulate click.");
+                // Manually switch view as fallback
+                   if(registrationFormDiv) registrationFormDiv.style.display = 'none';
+                   if(loginSection) loginSection.style.display = 'flex';
+          }
                 }, 2000);
 
             } else {
